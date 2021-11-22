@@ -1,0 +1,71 @@
+<div class="col-xl-10">
+
+    <form id="form">
+        <div>
+            <a href="/admin/sanpham/formThemSP" class="btn btn-outline-info">Thêm sản phẩm</a>
+        </div>
+        <table class="table table-striped" id="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng còn lại</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each dssp}}
+                    <tr>
+                        <th>{{sum @index 1}}</th>
+                        <th>{{sum @index 1}}</th>
+                        <th>{{this.tenSanPham}}</th>
+                        <th >{{this.gia}}</th>
+                        <th>{{this.soLuong}}</th>
+                        <th>  
+                            <button type="submit" class="btnXoaSP btn btn-danger" data-id="{{this._id}}">Xóa</button>
+                        </th>
+                        <th scope="col">
+                            <a href="/admin/sanpham/{{this._id}}/formSuaSP" class="btnSuaSP btn btn-primary">Sửa</a>
+                        </th>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </form>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+        var btnXoaSP = document.querySelectorAll('.btnXoaSP')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            btnXoaSP.forEach((btnXoa) => {
+                //console.log(btnXoa)
+                btnXoa.onclick = function(){           
+                    var idBtnXoa = btnXoa.getAttribute('data-id')
+                    console.log(idBtnXoa)
+                
+                    var xacnhan = confirm('Bạn có muốn xóa ? ')
+                    if(xacnhan == true){
+                        axios.post('/admin/sanpham/'+idBtnXoa+'/xoaSP?_method=DELETE')
+                        .then((res) =>{
+                            console.log(res.data)
+                            if(res.data.message == 'xoa sp thanh cong'){
+                                alert('xóa sản phẩm thành công!')
+                                location.assign('/admin/sanpham/dssp')
+                            }
+                        })
+                        .catch(() => {
+                            console.log('thát bại')
+                        })
+                    }
+                   
+                }
+            })
+        })
+        
+    })
+</script>

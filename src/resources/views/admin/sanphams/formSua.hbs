@@ -1,0 +1,57 @@
+<div class="col-xl-10">
+    <form id="form" method="post" action="/admin/sanpham/{{sp._id}}/suaSP?_method=PUT" enctype="multipart/form-data">
+        <h3>Form sửa sản phẩm</h3>
+        <div class="form-group">
+            <label for="tenSanPham">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="tenSanPham" name="tenSanPham" value="{{sp.tenSanPham}}">
+            <div id="idSP" hidden data-id="{{sp._id}}"></div>
+        </div>
+        <div class="form-group">
+            <label for="moTa">Mô tả</label>
+            <textarea class="form-control" id="moTa" name="moTa" >{{sp.moTa}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="gia">Giá</label>
+            <input type="text" class="form-control" name="gia" value="{{sp.gia}}" id="gia">    
+        </div>
+        <div class="form-group">
+            <label for="kichThuoc">Kích thước</label>
+            <input type="text" value="{{sp.kichThuoc}}" name="kichThuoc" class="form-control" id="kichThuoc">
+        </div>
+        <div class="form-group">
+            <label for="soLuong">Số lượng</label>
+            <input type="text" value="{{sp.soLuong}}" name="soLuong" class="form-control" id="soLuong">
+        </div>
+        <div class="form-group">
+            <label for="hinhAnh">Hình ảnh</label>
+            <img src="/img/{{sp.hinhAnh}}" alt="hinh anh">
+            <input type="file" class="form-control" name="hinhAnh" id="hinhAnh">
+        </div>
+        <button type="submit" class="btn btn-primary">Sửa thông tin</button>
+    </form>
+</div>
+
+{{!-- <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            var tenHangSanXuatNew = document.getElementById('tenHangSanXuat').value
+            var id = document.getElementById('idHSX').getAttribute('data-id')
+            console.log(id)
+            console.log(tenHangSanXuatNew)
+            axios.post('/admin/hangsx/'+id+'/suaHSX?_method=PUT', {
+                tenHangSanXuat: tenHangSanXuatNew,
+            })
+            .then((res) => {
+                console.log('sửa thông tin hsx thành công')
+                if(res.data.message = 'sua thong tin hsx thanh cong'){
+                    alert('sửa thông tin hsx thành công')
+                    location.assign('/admin/hangsx/dshsx')
+                }
+            })
+            .catch(err => console.log(err))
+        })
+    })
+</script> --}}

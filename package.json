@@ -1,0 +1,45 @@
+{
+  "name": "lvtn_nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon --inspect src/index.js",
+    "watch": "node-sass --watch src/resources/scss/app.scss src/public/css/app.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quangminh3101/LVTN_NodeJS.git"
+  },
+  "keywords": [
+    "LVTN"
+  ],
+  "author": "QuangMinh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quangminh3101/LVTN_NodeJS/issues"
+  },
+  "homepage": "https://github.com/quangminh3101/LVTN_NodeJS#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.4",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.0.12",
+    "mongoose-slug-generator": "^1.0.4",
+    "multer": "^1.4.3",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6",
+    "morgan": "^1.10.0",
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1"
+  }
+}

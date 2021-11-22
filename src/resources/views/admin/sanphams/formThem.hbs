@@ -1,0 +1,63 @@
+<div class="col-xl-10">
+    <form id="form">
+        <div class="form-group">
+            <label for="tenSanPham">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="tenSanPham">
+        </div>
+        <div class="form-group">
+            <label for="moTa">Mô tả</label>
+            <textarea class="form-control" id="moTa" placeholder="Nhập mô tả"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="gia">Giá</label>
+            <input type="text" class="form-control" id="gia">    
+        </div>
+        <div class="form-group">
+            <label for="kichThuoc">Kích thước</label>
+            <input type="text" class="form-control" id="kichThuoc">
+        </div>
+        <div class="form-group">
+            <label for="soLuong">Số lượng</label>
+            <input type="text" class="form-control" id="soLuong">
+        </div>
+        <div class="form-group">
+            <label for="hinhAnh">Hình ảnh</label>
+            <input type="file" class="form-control" name="hinhAnh" id="hinhAnh">
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+    </form>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            var tenSanPham = document.getElementById('tenSanPham').value
+            var moTa = document.getElementById('moTa').value
+            var gia = document.getElementById('gia').value
+            var kichThuoc = document.getElementById('kichThuoc').value
+            var soLuong = document.getElementById('soLuong').value
+            var hinhAnh = document.getElementById('hinhAnh').files
+
+            axios.post('/admin/sanpham/themSP', {
+                tenSanPham: tenSanPham,
+                moTa: moTa,
+                gia: gia,
+                kichThuoc: kichThuoc,
+                soLuong: soLuong,
+                hinhAnh: hinhAnh[0].name,
+            })
+            .then((res) => {
+                console.log('thành công')
+                if(res.data.message == 'them sp thanh cong'){
+                    alert('Thêm sản phẩm thành công!')
+                    location.assign('/admin/sanpham/dsSP')
+                }
+            })
+            .catch((err) => {
+                console.log('lỗi:',err)
+            })
+            
+        })
+    })
+</script>

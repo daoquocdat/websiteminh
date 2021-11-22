@@ -1,0 +1,36 @@
+<div class="col-xl-10">
+    <form id="form" >
+        <h3>Form thêm hãng sản xuất</h3>
+        <div class="form-group">
+            <label for="tenHangSanXuat">Tên hãng sản xuất</label>
+            <input type="text" class="form-control" id="tenHangSanXuat" >
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            var tenHangSanXuat = document.getElementById('tenHangSanXuat').value
+            console.log(tenHangSanXuat)
+
+            axios.post('/admin/hangsx/themHSX', {
+                tenHangSanXuat: tenHangSanXuat,
+            })
+            .then((res) => {
+                console.log('thành công')
+                if(res.data.message == 'them hsx thanh cong'){
+                    alert('Thêm hãng sản xuất thành công!')
+                    location.assign('/admin/hangsx/dshsx')
+                }
+            })
+            .catch((err) => {
+                console.log('lỗi:',err)
+            })
+            
+        })
+    })
+</script>

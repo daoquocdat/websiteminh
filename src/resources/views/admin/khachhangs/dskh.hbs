@@ -1,0 +1,65 @@
+<div class="col-xl-10">
+    <table class="table table-striped" id="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each dskh}}
+                <tr>
+                    <th>{{sum @index 1}}</th>
+                    <th>{{this.hoTen}}</th>
+                    <th >{{this.phone}}</th>
+                    <th>{{this.email}}</th>
+                    <td class="status" hidden>{{this.trangThai}}</td>
+                    <th>
+                        <span class="" data-id="{{this._id}}">
+                            {{#block_unblock_account this.trangThai}}
+                            {{/block_unblock_account}}
+                        </span>
+                    </th>  
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    var blockAccount = document.querySelectorAll('.btn-block-account') 
+        blockAccount.forEach((btn, i) =>{          
+            btn.onclick = function(){
+                console.log(btn)
+                var idItem = btn.parentElement.getAttribute('data-id')
+                console.log(idItem)
+                var trangThai = btn.parentElement.parentElement.parentElement.querySelector('.status')
+                console.log(trangThai)
+                var flag = 1
+                if(btn.innerText == 'Khóa'){
+                    btn.innerText = 'Mở khóa'
+                    btn.classList.remove('btn-danger') 
+                    btn.classList.add('btn-success')  
+                }
+                else if(btn.innerText == 'Mở khóa'){
+                    btn.innerText = 'Khóa'
+                    btn.classList.remove('btn-success') 
+                    btn.classList.add('btn-danger')  
+                }
+                axios.post("/admin/khachhang/" + idItem+'/khoaKH',{
+                    trangThai: trangThai.innerText,
+                })
+                .then((res)=>{
+                    console.log('abc')
+                    console.log(res.data)
+                })
+                .catch(err => console.log(err))
+            }
+        })
+    })
+</script>

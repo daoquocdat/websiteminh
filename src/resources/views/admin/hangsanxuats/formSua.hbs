@@ -1,0 +1,36 @@
+<div class="col-xl-10">
+    <form id="form" >
+        <h3>Form sửa hãng sản xuất</h3>
+        <div class="form-group">
+            <label for="tenHangSanXuat">Tên hãng sản xuất</label>
+            <input type="text" class="form-control" id="tenHangSanXuat" value="{{hsx.tenHangSanXuat}}">
+            <div id="idHSX" hidden data-id="{{hsx._id}}"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Sửa thông tin</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            var tenHangSanXuatNew = document.getElementById('tenHangSanXuat').value
+            var id = document.getElementById('idHSX').getAttribute('data-id')
+            console.log(id)
+            console.log(tenHangSanXuatNew)
+            axios.post('/admin/hangsx/'+id+'/suaHSX?_method=PUT', {
+                tenHangSanXuat: tenHangSanXuatNew,
+            })
+            .then((res) => {
+                console.log('sửa thông tin hsx thành công')
+                if(res.data.message = 'sua thong tin hsx thanh cong'){
+                    alert('sửa thông tin hsx thành công')
+                    location.assign('/admin/hangsx/dshsx')
+                }
+            })
+            .catch(err => console.log(err))
+        })
+    })
+</script>
