@@ -7,14 +7,17 @@ class HangSanXuatController {
         HangSanXuat.find({})
             .then(dshsx => {
                 res.render('admin/hangsanxuats/dshsx',{
-                    dshsx: mutipleMongooseToObject(dshsx)
+                    dshsx: mutipleMongooseToObject(dshsx),
+                    layout: 'admin'
                 })
             })
             .catch(next)
     }
 
     themHangSanXuat(req, res, next){
-        res.render('admin/hangsanxuats/formThem')
+        res.render('admin/hangsanxuats/formThem',{
+            layout: 'admin'
+        })
     }
 
     themHangSanXuatPost(req, res, next){
@@ -50,7 +53,8 @@ class HangSanXuatController {
         HangSanXuat.findOne({_id: req.params.id})
         .then((hsx) => {
             return res.render('admin/hangsanxuats/formSua', {
-                hsx: mongooseToObject(hsx)
+                hsx: mongooseToObject(hsx),
+                layout: 'admin'
             })
         })
         .catch(next)

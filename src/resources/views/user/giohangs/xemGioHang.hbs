@@ -1,0 +1,110 @@
+
+
+<div class="viewCard">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" colspan="2">Tên sản phẩm</th>
+                <th scope="col">Số Lượng</th>
+                <th scope="col">Giá /1 sản phẩm</th>
+                <th scope="col">Màu</th>
+                <th scope="col">Ghi chú khác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each gioHang.sp}}
+                <tr class="rowData" data-id="{{this._id}}">
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td class="idSP" hidden>{{this.idSanPham._id}}</td>
+                    {{!-- số lượng sản phẩm trong db --}}
+                    <td class="amountData" hidden>{{this.idSanPham.soLuong}}</th>
+                    {{!-- giá trị --}}
+                    <td colspan="2" class="name">{{this.idSanPham.tenSanPham}}</td>
+                    <td class="amount">{{this.soLuong}}</td>
+                    <td class="price">{{this.idSanPham.gia}}</td>
+                    <td class="color">{{this.mau}}</td>
+                    <td style="width: 200px;">
+                        <textarea class="note" cols="25" rows="2">{{this.ghiChu}}</textarea>
+                    </td>
+                    <td>
+                        <button class="btnRemove" data-id = '{{this._id}}'>
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    
+    <div>
+        Tổng tiền:
+        <span id="totalPrice">
+            {{gioHang.tongTien}}
+        </span>        
+    </div>
+    <button id="btnConfirm" class="btn btn-success">
+        Xác nhận mua hàng
+    </button>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var btnRemove = document.querySelectorAll('.btnRemove')
+        var btnConfirm = document.getElementById('btnConfirm')
+        console.log(btnConfirm)
+
+        //Xóa sp khỏi giỏ hàng
+        btnRemove.forEach((btn) =>{
+            btn.onclick = function(){
+                var IdBtnRemove = btn.getAttribute('data-id')
+                btn.parentElement.parentElement.remove()
+                axios.post('/'+IdBtnRemove+'/xoaKhoiGioHang')
+            }
+        })
+
+        //Xác nhận mua hàng
+        btnConfirm.onclick = function(){
+            console.log('abc')
+            var flag = 1
+            var arrayData = []
+            var rowData = this.parentElement.querySelector('.table').querySelectorAll('.rowData')
+            rowData.forEach((row, i) => {
+                var idSP = row.querySelector('.idSP').innerText
+                var amount = row.querySelector('.amount').innerText
+                var color = row.querySelector('.color').innerText
+                var note = row.querySelector('.note').value
+                //lấy số lượng sản phẩm trong db
+                var amountData = row.querySelector('.amountData').innerText
+                //cắm cờ
+                
+
+                if(parseInt(amountData) < 1){    
+                    console.log(amountData ,' < ' , amount)
+                    flag = 0
+                }
+                else{
+                    arrayData.push({
+                        idSP: idSP,
+                        amount: Number(amount),
+                        color: color,
+                        note: note,   
+                    })
+                }               
+            })
+            if(flag == 1){
+                console.log(arrayData)
+                axios.post('/xemGioHang', {
+                    arrayData: arrayData
+                })
+                .then((res) => {
+                    if(res.data.message == 'Qua giao hang'){
+                        location.assign('/diaChiGiaoHang')
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+        }
+    })
+</script>

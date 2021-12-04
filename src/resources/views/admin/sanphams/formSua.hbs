@@ -1,5 +1,5 @@
 <div class="col-xl-10">
-    <form id="form" method="post" action="/admin/sanpham/{{sp._id}}/suaSP?_method=PUT" enctype="multipart/form-data">
+    <form id="form" method="post" enctype="multipart/form-data">
         <h3>Form sửa sản phẩm</h3>
         <div class="form-group">
             <label for="tenSanPham">Tên sản phẩm</label>
@@ -22,36 +22,76 @@
             <label for="soLuong">Số lượng</label>
             <input type="text" value="{{sp.soLuong}}" name="soLuong" class="form-control" id="soLuong">
         </div>
+        
         <div class="form-group">
+            <div id="idMaHangDB" hidden>{{sp.maHang._id}}</div>
+            Nhà sản xuất
+            <select id="hangsx">
+                {{#each dshsx}}
+                    <option class="tenhangsx" value="{{this._id}}">{{this.tenHangSanXuat}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group" style="width: 200px">
             <label for="hinhAnh">Hình ảnh</label>
-            <img src="/img/{{sp.hinhAnh}}" alt="hinh anh">
+            <img src="/img/{{sp.hinhAnh}}" alt="hinh anh" style="width: 100%; height: 200px;">
             <input type="file" class="form-control" name="hinhAnh" id="hinhAnh">
         </div>
         <button type="submit" class="btn btn-primary">Sửa thông tin</button>
     </form>
 </div>
 
-{{!-- <script>
+<script>
     document.addEventListener("DOMContentLoaded", function(){
         var form = document.getElementById('form')
-
+        //id mã hàng từ db
+        var idMaHangDB = document.getElementById('idMaHangDB').innerText
+        var hangsx = document.getElementById('hangsx')
+        var tenhangsx = hangsx.querySelectorAll('.tenhangsx')
+            
+            tenhangsx.forEach((ten, i) => {
+                console.log(ten.value,'---------------', idMaHangDB)
+                if(ten.value == idMaHangDB){
+                    hangsx.options[i].selected = true;
+                }
+            })
         form.addEventListener('submit', function(e){
             e.preventDefault()
-            var tenHangSanXuatNew = document.getElementById('tenHangSanXuat').value
-            var id = document.getElementById('idHSX').getAttribute('data-id')
+            //id
+            var id = document.getElementById('idSP').getAttribute('data-id')
+            
+            //value
+            var tenSanPham = document.getElementById('tenSanPham').value      
+            var moTa = document.getElementById('moTa').value
+            var gia = document.getElementById('gia').value
+            var kichThuoc = document.getElementById('kichThuoc').value
+            var soLuong = document.getElementById('soLuong').value
+            var hinhAnh = document.getElementById('hinhAnh').files
+            hangsx = hangsx.value
             console.log(id)
-            console.log(tenHangSanXuatNew)
-            axios.post('/admin/hangsx/'+id+'/suaHSX?_method=PUT', {
-                tenHangSanXuat: tenHangSanXuatNew,
+            console.log(tenSanPham)
+            console.log(moTa)
+            console.log(gia)
+            console.log(kichThuoc)
+            console.log(soLuong)
+            console.log(hinhAnh)
+
+            axios.post('/admin/sanpham/'+id+'/suaSP?_method=PUT', {
+                tenSanPham: tenSanPham,
+                moTa:moTa,
+                gia: gia,
+                kichThuoc: kichThuoc,
+                hangsx: hangsx,
+                hinhAnh: hinhAnh[0]
             })
             .then((res) => {
                 console.log('sửa thông tin hsx thành công')
                 if(res.data.message = 'sua thong tin hsx thanh cong'){
                     alert('sửa thông tin hsx thành công')
-                    location.assign('/admin/hangsx/dshsx')
+                    location.assign('/admin/sanpham/dssp')
                 }
             })
             .catch(err => console.log(err))
         })
     })
-</script> --}}
+</script>

@@ -39,9 +39,10 @@
                 if(res.data.error == 'Sai tài khoản hoặc mật khẩu'){
                     fail.innerHTML = 'Sai tài khoản hoặc mật khẩu'
                 }
+                location.assign('/')
             })
             .catch(err => {
-                console.log(err)
+                console.log("err view login",err)
             })
         })
     })

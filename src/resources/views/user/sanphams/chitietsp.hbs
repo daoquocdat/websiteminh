@@ -1,0 +1,130 @@
+<div class="product--detail row">
+  
+  <!-- Left Column-->
+  <div class="left col-xl-4">
+    <img src="/img/{{sp.hinhAnh}}" alt="" style="width: 100%; height: 100%;">
+  </div>
+  
+  
+  <!-- Right Column -->
+  <div class="right col-xl-8">
+    <div id="idSP" value-id='{{sp._id}}' hidden></div>
+    <div class="name">
+      <h4>Tên sản phẩm: {{sp.tenSanPham}}</h4>
+      {{!-- Tình trạng còn hàng hay ko --}}
+      {{#still_stock sp.soLuong}}
+      {{/still_stock}}
+    </div>
+    <div>
+      Hãng sản xuất: {{sp.maHang.tenHangSanXuat}}
+    </div>
+
+    {{!-- Chọn  màu --}}
+    <div class="color">
+      <span>Màu in: </span>
+      <div class="choose">
+        <input type="radio" name="select" value="Đen" id="option-1" checked>
+        <label for="option-1" class="option option-1">
+            <div class="dot"></div>
+            <span>Đen</span>
+        </label>
+        <input type="radio" name="select" value="Xanh" id="option-2">
+        <label for="option-2" class="option option-2">
+            <div class="dot"></div>
+            <span>Xanh</span>
+        </label>
+        <input type="radio" name="select" value="Đỏ" id="option-3">
+        <label for="option-3" class="option option-3">
+            <div class="dot"></div>
+            <span>Đỏ</span>
+        </label>
+      </div>
+    </div>
+    
+    <div class="description">
+      <p>Mô tả: {{sp.moTa}}</p>
+    </div>
+    <div class="amount">Số lượng: 
+      <button id="amountIconMinus" > 
+          <i class="fa fa-minus" aria-hidden="true"></i>
+      </button>
+      <span id="amountBuy">1</span>
+      <button id="amountIconPlus" > 
+          <i class="fa fa-plus" aria-hidden="true"></i>
+      </button>    
+    </div>
+    <div class="price">
+      Giá: <span id="price-value">{{sp.gia}}</span>/1 sản phẩm
+    </div>
+
+    <div>
+      <button class="cart-btn">Thêm vào giỏ hàng</button>
+    </div>
+  </div>
+</div>
+<script src="/js/main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+      var priceValue = document.getElementById('price-value')
+      var cartBtn = document.querySelector('.cart-btn')
+      var valueSelectRadio = document.querySelector('input[name="select"]:checked').value;
+      var idSP = document.getElementById('idSP').getAttribute('value-id')
+      var amountIconPlus = document.getElementById('amountIconPlus')
+      var amountIconMinus = document.getElementById('amountIconMinus')
+      var amountBuy = document.getElementById('amountBuy')
+      var stillStock = document.getElementById('still_stock')
+      //format tiền
+      priceValue.innerText = format_tien(priceValue.innerText, 'VND')
+      //disabled nút thêm vào giỏ hàng nếu hết hàng
+      {{!-- if(stillStock.innerText == 'Hết hàng'){
+        stillStock.setAttribute('style', 'color: red;')
+        cartBtn.setAttribute('disabled', true)
+        cartBtn.setAttribute('class', 'cart-btn disabled')
+      } --}}
+
+      ///Gán disabled nút giảm ban đầu
+      console.log(parseInt(amountBuy.innerText))
+      if(parseInt(amountBuy.innerText) <= 1){   
+          amountIconMinus.setAttribute('disabled', true)
+      }
+      
+      //thêm số lượng
+      amountIconPlus.onclick = function(){
+       var value = parseInt(amountBuy.innerText) + 1
+       amountBuy.innerText = value
+       amountIconMinus.removeAttribute("disabled")
+      }
+      ////giảm số lượng đi 1 khi nhấn nút
+      amountIconMinus.onclick = function(){   
+        if(parseInt(amountBuy.innerText) > 1){
+          var value = parseInt(amountBuy.innerText) - 1
+          amountBuy.innerText = value
+        }
+        if(parseInt(amountBuy.innerText) <= 1){ 
+          amountIconMinus.setAttribute('disabled', true)
+        }
+      }
+      //thêm vào giỏ hàng
+      cartBtn.onclick = function(){
+        var valueSelectRadio = document.querySelector('input[name="select"]:checked').value
+        console.log(idSP)
+        axios.post('/'+ idSP +'/themVaoGioHang', {
+          idSP: idSP,
+          mau: valueSelectRadio,
+          soLuong: amountBuy.innerText,
+        })
+        .then((res) => {
+          if(res.data.message == 'Thêm vào giỏ hàng thành công'){
+            alert('Thêm sản phẩm vào giỏ hàng thành công!')
+            location.assign('/')
+          }
+        })
+        .catch((err) => {
+          console.log('lỗi thêm sp vào giỏ hàng',err)
+        })
+      }
+      
+      
+      
+    })
+</script>

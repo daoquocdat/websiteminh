@@ -1,0 +1,42 @@
+<div class="login offset-xl-4 col-xl-4">  
+    <h2>Đăng nhập Admin</h2>
+    <form id="form" method="post">
+        <div id="fail" style="color: red;"></div>
+        <div class="form-group">
+            <label for="taikhoan">Tên đăng nhập</label>
+            <input type="text" class="form-control" id="taikhoan">
+        </div>
+        <div class="form-group">
+            <label for="matkhau">Mật khẩu</label>
+            <input type="password" class="form-control" id="matkhau">
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            var taikhoan = document.getElementById('taikhoan').value
+            var matkhau = document.getElementById('matkhau').value
+            var fail = document.getElementById('fail')
+            axios.post('/admin/login',{
+                taikhoan: taikhoan,
+                matkhau: matkhau
+            })
+            .then((res) =>{
+                if(res.data.message == 'đây là admin'){
+                    location.assign('/admin/')
+                }
+                else if(res.data.error == 'Đăng nhập không hợp lệ'){
+                    fail.innerHTML = 'Đăng nhập không hợp lệ'
+                }
+            })
+            .catch((err) =>{
+                console.log('lỗi', err)
+            })
+        })
+    })
+</script>

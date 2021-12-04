@@ -1,0 +1,141 @@
+{{> processOrder}}
+
+<div class=" col-lg-12" id="kiemTraTTDH">
+    <div class="tieuDe">
+        Thông tin sản phẩm
+    </div> 
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Giá/1 sản phẩm</th>
+                <th scope="col">Màu</th>
+                <th scope="col">Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each kh.gioHang.sp}}
+                <tr>
+                    <td>{{sum @index 1}}</td>
+                    <td>{{this.idSanPham.tenSanPham}}</td>
+                    <td>{{this.soLuong}}</td>
+                    <td>{{this.idSanPham.gia}}</td>
+                    <td>{{this.mau}}</td>
+                    <td>{{this.ghiChu}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+
+    <div class="row">
+        <div class="diaChi col-lg-4">   
+            <div class="tieuDe">
+              Địa chỉ giao hàng:
+            </div> 
+            <div hidden>
+                <span id="idDiaChi"></span>         
+            </div>   
+            <div>Số nhà:
+                <span id="soNha"></span>         
+            </div>
+            <div>Phường/xã:
+                <span id="phuongXa"></span>
+            </div>
+            <div>Quận/huyện:
+                <span id="quanHuyen"></span>
+            </div>
+            <div>Tỉnh/Thành phố:
+                <span id="tinhTP"></span>
+            </div>
+        </div>
+
+        <div class="tinhTien offset-lg-4 col-lg-4">
+            <div class="tieuDe">Thanh toán: </div>
+            <div id="thanhToan"></div>
+            {{#each kh.gioHang.sp}}
+                <div class="tungSP">
+                    <span class="col-lg-6">
+                        {{this.idSanPham.tenSanPham}}:
+                    </span>
+                    <span class="col-lg-6">
+                        {{this.idSanPham.gia}} * {{this.soLuong}}
+                    </span>
+                </div>
+            {{/each}}
+            <div class="phiGiaoHang">
+                <span class="col-lg-6">
+                    Phí giao hàng
+                </span>
+                <span class="col-lg-6" id="tienGiaoHang">
+                    20000
+                </span>
+            </div>
+            <div class="tongTien">    
+                <span class="col-lg-6 chu">
+                    Tổng tiền: 
+                </span>
+                <span id="tien" hidden>
+                    {{kh.gioHang.tongTien}}
+                </span>
+                <span class="col-lg-6 tinh" id="tinh">
+                    
+                </span>
+            </div>
+            <button id="hoanThanh" class="btn btn-success">Hoàn tất</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var soNha = document.getElementById('soNha')
+    var soNhaClient = localStorage.getItem('soNha')
+    var phuongXa = document.getElementById('phuongXa')
+    var phuongXaClient = localStorage.getItem('phuongXa')
+    var quanHuyen = document.getElementById('quanHuyen')
+    var quanHuyenClient = localStorage.getItem('quanHuyen')
+    var tinhTP = document.getElementById('tinhTP')
+    var tinhTPClient = localStorage.getItem('tinhTP')
+    var thanhToan = document.getElementById('thanhToan')
+    var thanhToanClient = localStorage.getItem('phuongThucThanhToan')
+    var idDiaChi = document.getElementById('idDiaChi')
+    var idDiaChiClient = localStorage.getItem('idDiaChi')
+    soNha.innerText = soNhaClient
+    phuongXa.innerText = phuongXaClient
+    quanHuyen.innerText = quanHuyenClient
+    tinhTP.innerText = tinhTPClient
+    thanhToan.innerText = thanhToanClient
+    idDiaChi.innerText = idDiaChiClient
+    document.addEventListener('DOMContentLoaded', function(){
+        //xét bước active
+        var items = document.querySelectorAll('.items')
+        var active = items[2].setAttribute('class','items active')
+        //lấy nút hoàn tất
+        var hoanThanh = document.getElementById('hoanThanh')
+        var tinh = document.getElementById('tinh')
+        var tien = document.getElementById('tien').innerText
+        var tienGiaoHang = document.getElementById('tienGiaoHang').innerText
+        //Tính tổng tiền
+        var tongTien = parseInt(tien) + parseInt(tienGiaoHang)
+        //Hiển thị
+        tinh.innerText = tongTien
+        //hoàn thành
+        hoanThanh.onclick = function(e){
+            e.preventDefault()
+            axios.post('/donhang/xacThuc', {
+                phuongThucThanhToan: thanhToanClient,
+                idDiaChi: idDiaChiClient,
+                tongTien: parseInt(tongTien),
+                phiGiaoHang: parseInt(tienGiaoHang),
+            })
+            .then((res) => {
+                if(res.data.message == 'hoan tat don hang'){
+                    localStorage.clear();
+                    location.assign('/hoanTatDonHang')
+                }
+            })
+        }
+    })
+</script>

@@ -1,0 +1,48 @@
+<div class="login offset-xl-4 col-xl-4">  
+    <h2>Đăng nhập STAFF</h2>
+    <form id="form" method="post">
+        <div id="fail" style="color: red;"></div>
+        <div class="form-group">
+            <label for="taikhoan">Tên đăng nhập</label>
+            <input type="text" class="form-control" id="taikhoan">
+        </div>
+        <div class="form-group">
+            <label for="matkhau">Mật khẩu</label>
+            <input type="password" class="form-control" id="matkhau">
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            var taikhoan = document.getElementById('taikhoan').value
+            var matkhau = document.getElementById('matkhau').value
+            var fail =document.getElementById('fail')
+            localStorage.set('taikhoan') = taikhoan
+            localStorage.set('matkhau') = matkhau
+            axios.post('/staff/login',{
+                taikhoan: taikhoan,
+                matkhau: matkhau
+            })
+            .then((res) => {
+                if(res.data.message == 'Tài khoản đã bị khóa!'){
+                    fail.innerText = 'Tài khoản đã bị khóa!'
+                }
+                else if(res.data.message == 'Đăng nhập thành công'){
+                    location.assign('/staff/')
+                    
+                }
+                else if(res.data.error == 'Sai tài khoản hoặc mật khẩu'){
+                    fail.innerText = 'Sai tài khoản hoặc mật khẩu'
+                }
+            })
+            .catch((err) =>{
+                console.log(err)
+            })
+        })
+    })
+</script>

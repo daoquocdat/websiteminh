@@ -1,0 +1,78 @@
+<div class="offset-lg-3 col-lg-6 dangKyNV">
+    <div class="tieuDe">Tạo tài khoản nhân viên</div>
+    <form id="form" method="POST">
+        <div id="loi" style="red"></div>
+        <div class="form-group">
+            <label for="taiKhoan">Tài khoản đăng nhập</label>
+            <input type="text" required class="form-control" id="taiKhoan">
+        </div>
+        <div class="form-group">
+            <label for="matKhau">Mật khẩu</label>
+            <input type="text" required class="form-control" id="matKhau">    
+        </div>
+        <div class="form-group">
+            <label for="hoTen">Họ tên</label>
+            <input type="text" required class="form-control" id="hoTen">    
+        </div>
+        <div class="form-group">
+            <label >Giới tính</label>
+            <input type="radio" value="Nam" checked name="gioiTinh">
+            <label for="">Nam</label>
+            <input type="radio" value="Nữ" name="gioiTinh">
+            <label for="">Nữ</label>
+        </div>
+        <div class="form-group">
+            <label for="soDienThoai">Số điện thoại</label>
+            <input type="text" required class="form-control" id="soDienThoai">
+        </div>
+        <div class="form-group">
+            <label for="cccd">CCCD</label>
+            <input type="text" required class="form-control"  id="cccd">
+        </div>
+        <div class="form-group">
+            <label for="diaChi">Địa chỉ</label>
+            <input type="text" required class="form-control" id="diaChi">
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.getElementById('form')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            var taiKhoan = document.getElementById('taiKhoan').value
+            var matKhau = document.getElementById('matKhau').value
+            var hoTen = document.getElementById('hoTen').value
+            var gioiTinh = document.querySelector('input[name="gioiTinh"]:checked').value;
+            var soDienThoai = document.getElementById('soDienThoai').value
+            var cccd = document.getElementById('cccd').value
+            var diaChi = document.getElementById('diaChi').value
+            var loi = document.getElementById('loi')
+
+            axios.post('/admin/nhanvien/dangKy', {
+                taiKhoan: taiKhoan,
+                matKhau: matKhau,
+                hoTen: hoTen,
+                gioiTinh: gioiTinh,
+                soDienThoai: soDienThoai,
+                cccd: cccd,
+                diaChi: diaChi,
+            })
+            .then((res) =>{
+                if(res.data.error == 'tai khoan da co nguoi su dung'){
+                    loi.innerHTML = 'Tài khoản đã được đăng ký!'
+                    location.assign('/admin/nhanvien/dsnv')
+                }
+                else if(res.data.message == 'dang ky thanh cong'){
+                    alert('Đăng ký thàng công!')
+                    location.assign('/admin/nhanvien/dsnv')
+                }
+            })
+            .catch((err) => {
+                console.log('lỗi view',err)
+            })
+        })
+    })
+</script>

@@ -10,4 +10,13 @@ module.exports = {
             return '<a href="#" class="btn btn-success btn-block-account">Mở khóa</a>'
         }
     },
+
+    still_stock: function (amount) {
+        if(amount > 0){
+            return '<div id="still_stock">Còn hàng</div>'
+        }          
+        else{
+            return '<div id="still_stock">Hết hàng</div>'
+        }
+    },
 }

@@ -1,0 +1,72 @@
+<div class="col-lg-12">
+    <div>
+        <a href="/admin/nhanvien/dangKy" class="btn btn-info">Tạo nhân viên</a>
+    </div>
+    <table class="table table-striped" id="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th>Số điện thoại</th>
+                <th>Giới tính</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each dsnv}}
+                <tr>
+                    <th>{{sum @index 1}}</th>
+                    <th>{{this.hoTen}}</th>
+                    <th >{{this.soDienThoai}}</th>
+                    <th>{{this.gioiTinh}}</th>
+                    <td class="status" hidden>{{this.trangThai}}</td>
+                    <th>
+                        <a href="/admin/nhanvien/{{this._id}}/formSua" class="btn btn-primary">Sửa</a>
+                        <span class="" data-id="{{this._id}}">
+                            {{#block_unblock_account this.trangThai}}
+                            {{/block_unblock_account}}
+                        </span>
+                    </th>  
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    var blockAccount = document.querySelectorAll('.btn-block-account') 
+    console.log(blockAccount)
+        blockAccount.forEach((btn, i) =>{          
+            btn.onclick = function(){
+                var idItem = btn.parentElement.getAttribute('data-id')
+                var trangThai = btn.parentElement.parentElement.parentElement.querySelector('.status')
+                var flag = 1
+                if(btn.innerText == 'Khóa'){
+                    btn.innerText = 'Mở khóa'
+                    btn.classList.remove('btn-danger') 
+                    btn.classList.add('btn-success')  
+                }
+                else if(btn.innerText == 'Mở khóa'){
+                    btn.innerText = 'Khóa'
+                    btn.classList.remove('btn-success') 
+                    btn.classList.add('btn-danger')  
+                }
+                axios.post("/admin/nhanvien/" + idItem+'/khoaNV',{
+                    trangThai: trangThai.innerText,
+                })
+                .then((res)=>{
+                    if(res.data.message == 'khóa tài khoản thành công'){
+                        alert('Khóa tài khoản thành công')
+                        location.assign('/admin/nhanvien/dsnv')
+                    }
+                    else if(res.data.message == 'mở khóa tài khoản thành công'){
+                        alert('Mở khóa tài khoản thành công')
+                        location.assign('/admin/nhanvien/dsnv')
+                    }
+                })
+                .catch(err => console.log(err))
+            }
+        })
+    })
+</script>

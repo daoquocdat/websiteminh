@@ -4,7 +4,14 @@ const upload = require('../../../src/app/middlewares/multer')
 const sanPhamController = require('../../app/controllers/admin/SanPhamAdminController')
 const khachHangController = require('../../app/controllers/admin/KhachHangAdminController')
 const hangSanXuatController = require('../../app/controllers/admin/HangSanXuatController')
+const authController = require('../../app/controllers/admin/AuthController')
+const nhanVienController = require('../../app/controllers/admin/NhanVienController')
 
+//Đăng nhập đăng xuất
+router.get('/login', authController.loginGet)
+router.post('/login', authController.loginPost)
+router.get('/logout', authController.logout_get)
+///
 router.get('/sanpham/formThemSP', sanPhamController.themSanPham)
 router.post('/sanpham/themSP',upload.single('hinhAnh'), sanPhamController.themSanPhamPost)
 router.get('/sanpham/dsSP', sanPhamController.dsSanPham)
@@ -22,6 +29,14 @@ router.put('/hangsx/:id/suaHSX', hangSanXuatController.suaHangSanXuatPut)
 //Khách hàng
 router.get('/khachhang/dskh', khachHangController.dsKhachHang)
 router.post('/khachhang/:id/khoaKH', khachHangController.khoaKhachHang)
+
+//nhân viên
+router.get('/nhanvien/dangKy', nhanVienController.dangKyNV)
+router.post('/nhanvien/dangKy', nhanVienController.dangKyNVPost)
+router.get('/nhanvien/dsnv', nhanVienController.dsnv)
+router.get('/nhanvien/:id/formSua', nhanVienController.formSua)
+router.put('/nhanvien/:id/sua', nhanVienController.sua)
+router.post('/nhanvien/:id/khoaNV', nhanVienController.khoaNV)
 
 router.get('/', sanPhamController.index)
 module.exports = router

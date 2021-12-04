@@ -52,7 +52,6 @@ class AuthController {
             KhachHang.findOne({phone: phone})
             .then((khachhang) => {
                 if(khachhang == null){
-                    console.log(khachhang)
                     const kh = new KhachHang({
                         email: email,
                         phone: phone,
@@ -60,15 +59,23 @@ class AuthController {
                         hoTen: hoTen , 
                         gioiTinh: gioiTinh, 
                         trangThai: 'hoat dong'
-                   }).save()
-                   // tạo token
-                   console.log("kh",kh)
-                   const token = createToken(kh._id)
-                   console.log('dang ky thanh cong')
-                   res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
-                   res.json({ kh: kh._id, message: 'dang ky thanh cong'})
+                   })
+                   .save()
+                   .then((kh) => {
+                        console.log(kh._id)
+                    // tạo token
+                        const token = createToken(kh._id)
+                        console.log('dang ky thanh cong')
+                        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
+                        res.json({ kh: kh._id, message: 'dang ky thanh cong'})   
+                   })
+                   .catch((err) => {
+                       console.log('đăng ký thất bại', err)
+                   })
+                   
                 }
                 else{
+                    console.log("khach hang",khachhang)
                     const error = 'tai khoan da co nguoi su dung'
                     console.log('tai khoan da co nguoi su dung')
                     res.json( {error: error } )
@@ -89,7 +96,8 @@ class AuthController {
     }
 
     logout_get(req, res, next){
-
+        res.cookies('jwt', '', { maxAge: 1 })
+        res.redirect('/')
     }
 }
 

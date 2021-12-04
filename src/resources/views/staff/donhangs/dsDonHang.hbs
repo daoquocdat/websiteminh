@@ -1,0 +1,44 @@
+<div class="col-lg-10" id="dsDonHang">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th colspan="2">Tên khách hàng</th>
+                <th>Số điện thoại</th>
+                <th>Trạng thái đơn hàng</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái thanh toán</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each donhang}}
+            <tr>
+                <td>{{sum @index 1}}</td>
+                <td colspan="2">{{this.maKhachHang.hoTen}}</td>
+                <td>{{this.maKhachHang.phone}}</td>
+                <td>{{this.trangThai}}</td>
+                <td>{{this.tongTien}}</td>
+                <td>{{this.trangThaiThanhToan}}</td>
+                <td>
+                    <a href="/staff/donhang/{{this._id}}/chiTietDH" class="btn btn-info">Chi tiết đơn hàng</a>
+                    <div class="trangThai">
+                        <a data-id="{{this._id}}" class="xacNhan btn btn-success">Xác nhận</a>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var xacNhan = document.querySelectorAll('.xacNhan')
+        xacNhan.forEach((btn) =>{
+            btn.onclick = function(e){
+                var id =btn.getAttribute('data-id')
+                axios.post('/staff/donhang/' + id + '/xacNhan')
+            }
+        })
+    })
+</script>

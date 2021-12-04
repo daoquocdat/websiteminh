@@ -1,4 +1,5 @@
 const SanPham = require('../../models/SanPham')
+const HangSanXuat = require('../../models/HangSanXuat')
 const {mutipleMongooseToObject} = require('../../../util/mongoose')
 const {mongooseToObject} = require('../../../util/mongoose')
 
@@ -6,29 +7,35 @@ class SanPhamAdminController {
 
     //[GET] /dssp/:slug
     index(req, res, next){
-        SanPham.find({})
-            .then(dssp => {
-                res.render('admin/sanphams/dssp',{
-                    dssp: mutipleMongooseToObject(dssp)
-                })
+        SanPham.find({})      
+        .then(dssp => {
+            res.render('admin/sanphams/dssp',{
+                dssp: mutipleMongooseToObject(dssp),
+                layout: 'admin'
             })
-            .catch(next)
+        })
+        .catch(next)
     }
 
     themSanPham(req, res, next){
-        res.render('admin/sanphams/formThem')
+        HangSanXuat.find({})
+        .then((dshsx) =>{
+            res.render('admin/sanphams/formThem', {
+                dshsx: mutipleMongooseToObject(dshsx),
+                layout: 'admin'
+            })
+        })
     }
 
     themSanPhamPost(req, res, next){
-        console.log("req.body",req.body)
-        console.log("req.file",req.file)
         const sp = new SanPham({
             tenSanPham: req.body.tenSanPham,
             moTa: req.body.moTa,
             gia: req.body.gia,
             kichThuoc: req.body.kichThuoc,
             soLuong: req.body.soLuong,
-            hinhAnh: req.body.hinhAnh,
+            maHang: req.body.maHang,
+            hinhAnh: req.file.filename,
         })
         .save()
         .then((sp) => {
@@ -46,7 +53,8 @@ class SanPhamAdminController {
         SanPham.find({})
             .then(dssp => {
                 res.render('admin/sanphams/dssp',{
-                    dssp: mutipleMongooseToObject(dssp)
+                    dssp: mutipleMongooseToObject(dssp),
+                    layout: 'admin'
                 })
             })
             .catch(next)
@@ -64,16 +72,23 @@ class SanPhamAdminController {
         })
     }
     suaSanPham(req, res, next){
-        SanPham.findOne({_id: req.params.id})
-        .then((sp) => {
+        
+        Promise.all([
+            SanPham.findOne({_id: req.params.id}).populate('maHang'),
+            HangSanXuat.find({})
+        ])
+        .then(([sp, dshsx]) => {
             return res.render('admin/sanphams/formSua', {
-                sp: mongooseToObject(sp)
+                sp: mongooseToObject(sp),
+                dshsx: mutipleMongooseToObject(dshsx),
+                layout: 'admin'
             })
         })
         .catch(next)
     }
     suaSanPhamPut(req, res, next){
         console.log(req.file)
+        console.log(req.body)
         if(req.file){
             SanPham.updateOne({_id: req.params.id}, {
                 tenSanPham: req.body.tenSanPham,
@@ -86,14 +101,14 @@ class SanPhamAdminController {
             .then(() => {
                 console.log('sua thong tin sp thanh cong')
                 //res.json({message: 'sua thong tin sp thanh cong'})
-                res.redirect('/admin/sanpham/dssp')
+                //res.redirect('/admin/sanpham/dssp')
             })
             .catch(() => {
                 // res.json({
                 //     status: 'error',
                 //     error: 'sua thong tin sp that bai'
                 // })
-                res.redirect('/admin/sanpham/dssp')
+               // res.redirect('/admin/sanpham/dssp')
             })
         }
         else{

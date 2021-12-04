@@ -1,0 +1,88 @@
+<div class=" col-lg-12" id="kiemTraTTDH">
+    <div class="tieuDe">
+        Thông tin sản phẩm
+    </div> 
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Giá/1 sản phẩm</th>
+                <th scope="col">Màu</th>
+                <th scope="col">Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each donhang.ma}}
+                <tr>
+                    <td>{{sum @index 1}}</td>
+                    <td>{{this.idSanPham.tenSanPham}}</td>
+                    <td>{{this.soLuong}}</td>
+                    <td>{{this.idSanPham.gia}}</td>
+                    <td>{{this.mau}}</td>
+                    <td>{{this.ghiChu}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+
+    <div class="row">
+        <div class="diaChi col-lg-4">   
+            <div class="tieuDe">
+              Địa chỉ giao hàng:
+            </div> 
+            <div hidden>
+                <span id="idDiaChi"></span>         
+            </div>   
+            <div>Số nhà:
+                <span id="soNha"></span>         
+            </div>
+            <div>Phường/xã:
+                <span id="phuongXa"></span>
+            </div>
+            <div>Quận/huyện:
+                <span id="quanHuyen"></span>
+            </div>
+            <div>Tỉnh/Thành phố:
+                <span id="tinhTP"></span>
+            </div>
+        </div>
+
+        <div class="tinhTien offset-lg-4 col-lg-4">
+            <div class="tieuDe">Thanh toán: </div>
+            <div id="thanhToan"></div>
+            {{#each kh.gioHang.sp}}
+                <div class="tungSP">
+                    <span class="col-lg-6">
+                        {{this.idSanPham.tenSanPham}}:
+                    </span>
+                    <span class="col-lg-6">
+                        {{this.idSanPham.gia}} * {{this.soLuong}}
+                    </span>
+                </div>
+            {{/each}}
+            <div class="phiGiaoHang">
+                <span class="col-lg-6">
+                    Phí giao hàng
+                </span>
+                <span class="col-lg-6" id="tienGiaoHang">
+                    20000
+                </span>
+            </div>
+            <div class="tongTien">    
+                <span class="col-lg-6 chu">
+                    Tổng tiền: 
+                </span>
+                <span id="tien" hidden>
+                    {{kh.gioHang.tongTien}}
+                </span>
+                <span class="col-lg-6 tinh" id="tinh">
+                    
+                </span>
+            </div>
+            <button id="hoanThanh" class="btn btn-success">Hoàn tất</button>
+        </div>
+    </div>
+</div>

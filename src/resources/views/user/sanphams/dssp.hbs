@@ -1,20 +1,26 @@
-
+<div class="dssp">
     <div class="row">
-        
-            {{#each dssp}}
-            <div class="col-lg-4">
-                <div class="">
-                    <a href="">
-                        <img class="" src="/img/{{this.hinhAnh}}" alt="Card image cap">
+        {{#each dssp}}
+            <div class="col-lg-3 items">
+                <div class="card">
+                    <a href="/sanpham/{{this.slug}}/chitietsp" class="items-img">
+                        <img class="" src="/img/{{this.hinhAnh}}" alt="Card image cap" style="width: 100%;height: 200px;">
                     </a>
-                    <div class="">
-                        <h5 class="tensp">{{this.tenSanPham}}</h5>
-                        <p class="gia">{{this.gia}} VND</p>
-                        <a href="#" class="btn btn-primary">Thêm vào giỏ hàng</a>
+                    <div class="items-element">
+                        <a href="/sanpham/{{this.slug}}/chitietsp">
+                            <h4>
+                                <b>{{this.tenSanPham}}</b>
+                            </h4>
+                        </a>
+                        <div>Kích thước: {{this.kichThuoc}}</div>
+                        <p class="gia">Giá: {{this.gia}} VND</p>
+                        <center>  
+                            <button class="btn btn-primary">Thêm vào giỏ hàng</button>
+                        </center>
                     </div>
                 </div>
-                </div>
-            {{/each}}
-        
+            </div>
+        {{/each}}   
     </div>
+</div>
     

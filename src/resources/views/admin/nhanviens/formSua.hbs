@@ -1,0 +1,49 @@
+<div class="offset-lg-3 col-lg-6">
+    <form id="form" method="post">
+        <h3>Form sửa thông tin nhân viên</h3>
+        <div class="form-group">
+            <label for="taiKhoan" >Tài khoản: </label>
+            <div id="idNV" hidden>{{nhanvien._id}}</div>
+            <input type="text" class="form-control" id="taiKhoan" value="{{nhanvien.taiKhoanDangNhap}}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="hoTen">Họ tên</label>
+            <input type="text" class="form-control" id="hoTen" value="{{nhanvien.hoTen}}">
+        </div>
+        <div class="form-group">
+            <label for="soDienThoai">Số điện thoại</label>
+            <input type="text" class="form-control" id="soDienThoai" value="{{nhanvien.soDienThoai}}">
+        </div>
+        <div class="form-group">
+            <label for="cccd">Số CCCD</label>
+            <input type="text" class="form-control" id="cccd" value="{{nhanvien.soCCCD}}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sửa thông tin</button>
+    </form>
+</div>
+
+<script>
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        var hoTen = document.getElementById('hoTen').value
+        var soDienThoai = document.getElementById('soDienThoai').value
+        var cccd = document.getElementById('cccd').value
+    
+        var idNV = document.getElementById('idNV').innerText
+        axios.post('/admin/nhanvien/'+ idNV + '/sua?_method=PUT', {
+            hoTen: hoTen,
+            soDienThoai: soDienThoai,
+            cccd: cccd,
+        })
+        .then((res) => {
+            if(res.data.message == 'update nv thành công'){
+                alert('update nv thành công')
+            }
+        })
+        .catch((err) => {
+            console.log('lỗi view', err)
+        })
+    })
+</script>

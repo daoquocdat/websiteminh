@@ -1,0 +1,24 @@
+{{> processOrder}}
+<div id="hoanTatDonHang">
+    <div class="offset-lg-3 col-lg-6">
+        <div class="tieuDe">
+            <i class="fa fa-check"></i>
+            <span>Hoàn tất đơn hàng</span> 
+        </div>
+        <div class="border">
+            <div class="center">
+            Sản phẩm đã được đặt thành công!
+            </div>   
+            <div class="center">
+                
+                Cám ơn quý khách {{user.hoTen}} đã mua sản phẩm
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    var items = document.querySelectorAll('.items')
+        var active = items[3].setAttribute('class','items active')
+</script>

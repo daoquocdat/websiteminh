@@ -18,7 +18,7 @@ html, body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 15px;
-    display: flex;
+    // display: flex;
   }
 
   /* Columns */
@@ -190,6 +190,10 @@ html, body {
     background-color: #64af3d;
   }
 
+  .disable{
+    pointer-events: none;
+    cursor: default;
+  }
   /* Responsive */
 @media (max-width: 940px) {
     .container {
@@ -216,13 +220,346 @@ html, body {
       top: -85px;
     }
   }
-
+.page-wrapper{
+  height: 100%;
+}
 .sidebar{
+  background-color: #212529;
+  height: 100%;
   ul{
+    height: 100%;
     list-style: none;
     a{
-      color: #333;
+      font-size: 16px;
+      margin-top: 20px;
+      color: #E1E8EE;
       text-decoration: none;
+    }
+  }
+}
+
+
+//DSSP
+.dssp{
+  width: 100%;
+  height: 100%;
+  .row{
+    width: 100%;
+    .items{
+      .card{
+        a{
+          color: #333;
+        }
+        a:hover{
+          text-decoration: none;
+          color: rgba(0,0,0,0.1);
+        }
+        .items-img{
+          border: 1px solid #333;
+        }
+        .items-element{
+          padding-left: 5px;
+          center{
+            margin-bottom: 2px;
+            .btn{
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//Chi tiết sp
+.product--detail{
+  width: 100%;
+  height: 100%;
+  .left{
+    width: 100%;
+    height: 100%;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .right{
+    width: 100%;
+    height: 100%;
+    .name{
+      border-bottom: 1px solid #E1E8EE;
+      margin-bottom: 20px;
+    }
+    .amount{
+      .amountIconPlus,
+      .amountIconMinus {
+        font-size: 12px;
+        border: none;
+      }
+    }
+    .color{
+      .choose{
+        display: inline-flex;
+        //background: #fff;
+        height: 100px;
+        width: 400px;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 5px;
+        padding: 20px 15px;
+        .option{
+          background: #fff;
+          height: 100%;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          margin: 0 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          padding: 0 10px;
+          border: 2px solid lightgrey;
+          transition: all 0.3s ease;
+          .dot{
+            height: 20px;
+            width: 20px;
+            background: #d9d9d9;
+            border-radius: 50%;
+            position: relative;
+          }
+          .dot::before{
+            position: absolute;
+            content: "";
+            top: 4px;
+            left: 4px;
+            width: 12px;
+            height: 12px;
+            background: #314780;
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(1.5);
+            transition: all 0.3s ease;
+          }
+        }
+      }
+      input[type="radio"]{
+        display: none;
+      }
+      .option-1{
+        border: 2px solid #323232 !important;
+        color: #323232;
+      }
+      .option-2{
+        border: 2px solid #314780 !important;
+        color: #314780;
+      }
+      .option-3{
+        border: 2px solid #C91524 !important;
+        color: #C91524;
+      }
+      #option-1:checked:checked ~ .option-1{
+        border-color: #ffffff;
+        background: #323232;
+        color: #ffffff;
+      }
+      #option-2:checked:checked ~ .option-2{
+        border-color: #ffffff;
+        background: #314780;
+        color: #ffffff;
+      }
+      #option-3:checked:checked ~ .option-3{
+        border-color: #ffffff;
+        background: #C91524;
+        color: #ffffff;
+      }
+      
+      #option-1:checked:checked ~ .option-1 .dot::before,
+      #option-2:checked:checked ~ .option-2 .dot::before,
+      #option-3:checked:checked ~ .option-3 .dot::before{
+        opacity: 1;
+        transform: scale(1);
+      }
+      #option-1:checked:checked ~ .option-1 .dot::before{
+        background: #323232;
+      }
+      #option-2:checked:checked ~ .option-2 .dot::before{
+        background: #314780;
+      }
+      #option-3:checked:checked ~ .option-3 .dot::before{
+        background: #C91524;
+      }
+    }
+  }
+}
+//View xem giỏ hàng
+.viewCard{
+  width: 100%;
+  .table{
+    .btnRemove{
+      background-color: red;
+    }
+  }
+}
+//View địa chỉ giao hàng
+#diaChiGiaoHang{
+  width: 100%;
+  .tieuDe{
+    font-size: 40px;
+    font-weight: bold;
+  }
+  #diaChiDaCo{
+    width: 100% !important;
+  }
+  .noiDung{
+    width: 100%;
+    
+    
+  }
+}
+
+//tiến trình đặt hàng
+.processOrder{
+  width: 100%;
+  .menu{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    .items{
+      width: 100%;
+      text-align: center;
+      .tittle{
+        width: 100%;
+        padding-right: 50%;
+      }
+      .content{
+        width: 100%;
+        margin-right: 10px;
+      }
+    }
+    .active{
+      border: 1px solid #333;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  }
+}
+
+//Phương thức thanh toán
+#phuongThucThanhToan{
+  .tieuDe{
+    font-size: 40px;
+    font-weight: bold;
+  }
+  .noiDung{
+    .thanhPhan{
+      input{
+        
+      }
+      label{
+        svg{
+          margin-bottom: -5px;
+        }
+      }
+    }
+  }
+}
+
+//Kiểm tra thông tin đơn hàng
+#kiemTraTTDH{
+  .tieuDe{
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .table{
+    border: 1px solid #333 !important;
+    th{
+      border-top: 1px solid #333 !important;
+    }
+  }
+  .row{
+    .diaChi{
+      .tieuDe{
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+    .tinhTien{
+      width: 100%;
+      .tieuDe{
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .tungSP{
+        display: flex;
+        margin-bottom: 2px;
+        span{
+          text-align: center;
+        }
+      }
+      .phiGiaoHang{
+        width: 100%;
+        display: flex;
+        margin-bottom: 2px;
+        span{
+          text-align: center;
+        }
+      }
+      .tongTien{
+        display: flex;
+        span{
+          text-align: center;
+        }
+        .chu{
+          font-weight: bold;
+        }
+        .tinh{
+          border-top: 2px solid #333;
+        }
+      }
+    }
+  }
+}
+
+#hoanTatDonHang{
+  
+  .tieuDe{
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
+    margin-bottom: 30px;
+    i{
+      font-size: 56px;
+      border: 1px solid;
+      border-radius: 100%;
+      background-color: #7DC855;
+    }
+    span{
+      align-items: center;
+      font-size: 40px;
+    }
+  }
+  .border{
+    margin-top: 20px;
+    border: 1px solid;
+    border-radius: 20px;
+    height: 200px;
+    .center{
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+}
+
+#dsDonHang{
+  table{
+    tbody{
+      td{
+        .trangThai{
+          margin-top: 5px;
+        }
+      }
     }
   }
 }

@@ -1,19 +1,18 @@
 const SanPham = require('../../models/SanPham')
 const {mutipleMongooseToObject} = require('../../../util/mongoose')
+const {mongooseToObject} = require('../../../util/mongoose')
 
 class SanPhamController {
-
-    //[GET] /dssp/:slug
-    show(req, res, next){
-        const result = SanPham.findOne({slug: req.params.slug })
-            .then((result) => {
-                console.log(result)
-                // res.json(result)
-                res.render('sanphams/show',{
-                    layout: 'user'
-                })
+    chitietsp(req, res, next){
+        const sp = SanPham.findOne({slug: req.params.slug })
+        .populate('maHang')
+        .then((sp) => {
+            res.render('user/sanphams/chitietsp',{
+                sp: mongooseToObject(sp),
+                layout: 'user'
             })
-            .catch(next)
+        })
+        .catch(next)
     }
     dssp(req, res, next){
         SanPham.find({})
