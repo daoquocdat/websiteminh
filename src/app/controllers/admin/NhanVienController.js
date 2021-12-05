@@ -8,7 +8,7 @@ const {mongooseToObject} = require('../../../../src/util/mongoose')
 
 const maxAge = 3*24*60*60
 const createToken = (id) =>{
-    return jwt.sign( { id  }, 'day la nhan vien', { 
+    return jwt.sign( { id  }, 'next user secret', { 
         expiresIn: maxAge 
     })
 }
@@ -48,10 +48,10 @@ class NhanVienController {
                    .then((nv) => {
                         console.log(nv._id)
                     // tạo token
-                        //const token = createToken(nv._id)
-                        //console.log(token)
+                        const token = createToken(nv._id)
+                        console.log(token)
                         console.log('dang ky thanh cong')
-                        //res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
+                        res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
                         res.json({ nv: nv._id, message: 'dang ky thanh cong'})   
                    })
                    .catch((err) => {

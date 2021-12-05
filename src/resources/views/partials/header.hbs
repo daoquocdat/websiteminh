@@ -10,21 +10,48 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="/dssp">Sản phẩm</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/dssp">Danh sách sản phẩm</a>
       </li>
   </div>
 
-  <div>
-    <a href="/xemGioHang">Xem giỏ hàng</a>
+  <div class="headerUser">
+    <div id="search">
+      <form action="/search">
+        <div class="thanhSearch">
+          <input type="text" name="search">
+          <button>
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        
+      </form>
+    </div>
     {{#if user}}
-    {{user.hoTen}}
-    <a href="/login">Đăng xuất</a>
+    <a href="/xemGioHang" class="gioHang">Xem giỏ hàng</a>
+    
+    <div class="dropdown">
+   <div  onclick="hamDropdown()"  class="nut_dropdown">{{user.hoTen}}</div>
+   <div class="noidung_dropdown">
+     <a href="/lichSuMuaHang">Lịch sử mua hàng</a>
+     <a href="/diaChi">Địa chỉ</a>
+     <a href="/login">Đăng xuất</a>
+   </div>
+ </div>
     {{else}}
-      <div class="row">
-        <a href="">Đăng ký</a>
+      <div class="row dangNhapDangKy">
+        <a href="/register">Đăng ký</a>
         <span>/</span>
-        <a href="">Đăng nhập</a>
+        <a href="/login">Đăng nhập</a>
       </div>
     {{/if}}
   </div>
 </nav>
+
+<script>
+  function hamDropdown() {
+     document.querySelector(".noidung_dropdown").classList.toggle("hienThi");
+ }
+</script>

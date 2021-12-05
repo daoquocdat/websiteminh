@@ -1,0 +1,54 @@
+<div>
+    <div style="font-size: 24px;font-weight: 700;">Địa chỉ khách hàng</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Số nhà</th>
+                <th>Phường Xã</th>
+                <th>Quận Huyện</th>
+                <th>Tỉnh TP</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each diachi}}
+            <tr>
+
+                <th>{{sum @index 1}}</th>
+                <th>{{this.soNha}}</th>
+                <th>{{this.phuongXa}}</th>
+                <th>{{this.quanHuyen}}</th>
+                <th>{{this.tinhTP}}</th>
+                <th>
+                    <a href="" class="btnXoaDiaChi btn btn-danger" data-id="{{this._id}}">Xóa địa chỉ</a>
+                </th>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <form name="xoaDiaChi" method="POST"></form>
+</div>
+
+<script>
+    var form = document.forms['xoaDiaChi']
+    var btnXoaDiaChi = document.querySelectorAll('.btnXoaDiaChi')
+    btnXoaDiaChi.forEach((btn) => {
+        btn.addEventListener('click', function(e){
+            console.log(btn)
+            var id = btn.getAttribute('data-id')
+            e.preventDefault()
+            axios.post('/'+id+'/xoaDiaChi?_method=DELETE')
+                .then((res) =>{
+                    console.log(res.data)
+                    if(res.data.message == 'xoa dia chi thanh cong'){
+                        alert('xóa địa chỉ thành công!')
+                        location.assign('/diachi')
+                    }               
+                })
+                .catch((err) => {
+                console.log('thát bại')
+            })
+        })
+    })
+
+</script>

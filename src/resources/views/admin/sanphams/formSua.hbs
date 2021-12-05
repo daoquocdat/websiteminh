@@ -51,7 +51,9 @@
             
             tenhangsx.forEach((ten, i) => {
                 console.log(ten.value,'---------------', idMaHangDB)
+
                 if(ten.value == idMaHangDB){
+                    console.log('bằng nhau')
                     hangsx.options[i].selected = true;
                 }
             })
@@ -76,13 +78,20 @@
             console.log(soLuong)
             console.log(hinhAnh)
 
-            axios.post('/admin/sanpham/'+id+'/suaSP?_method=PUT', {
-                tenSanPham: tenSanPham,
-                moTa:moTa,
-                gia: gia,
-                kichThuoc: kichThuoc,
-                hangsx: hangsx,
-                hinhAnh: hinhAnh[0]
+            let formData = new FormData()
+            formData.append('tenSanPham', tenSanPham)
+            formData.append('soLuong', soLuong)
+            formData.append('moTa', moTa)
+            formData.append('gia', gia)
+            formData.append('kichThuoc', kichThuoc)
+            formData.append('maHang', hangsx)
+            formData.append('hinhAnh', hinhAnh[0])
+
+            axios.post('/admin/sanpham/'+id+'/suaSP?_method=PUT',formData ,{
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data'
+                } 
             })
             .then((res) => {
                 console.log('sửa thông tin hsx thành công')

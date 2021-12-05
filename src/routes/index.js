@@ -8,6 +8,6 @@ const {staffInfo} = require('../../src/app/middlewares/authMiddleware')
 function router(app){
     app.use('/admin', adminRouter)
     app.use('/staff', staffRouter)
-    app.use('/',checkUser, userRouter)
+    app.use('/', userRouter)
 }
 module.exports = router;

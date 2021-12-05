@@ -1,0 +1,60 @@
+<div class="col-xl-10">
+        <div>
+            <a href="/admin/hangsx/dshsx" class="">Danh sách hãng sản xuất</a>
+        </div>
+        <table class="table table-striped" id="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên hãng sản xuất</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each dshsx}}
+                    <tr>
+                        <th>{{sum @index 1}}</th>
+                        <th class="tenhsx" scope="col-2">{{this.tenHangSanXuat}}</th>
+                        <th>  
+                            <a href="" class="btnXoaDSHSX btn btn-danger" data-id="{{this._id}}">Xóa</a>
+                        </th>
+                        <th scope="col">
+                            <a href="" data-id="{{this._id}}" class="btnKhoiPhucDSHSX btn btn-info">Khôi phục</a>
+                        </th>
+                    </tr>
+                {{else}}
+                    Thùng rác trống!
+                {{/each}}
+            </tbody>
+        </table>
+    <form name="formKhoiPhuc" method="POST"></form>
+    <form name="formXoa" method="POST"></form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.forms['formKhoiPhuc']
+        var formXoa = document.forms['formXoa']
+        var btnKhoiPhucDSHSX = document.querySelectorAll('.btnKhoiPhucDSHSX')
+        var btnXoaDSHSX = document.querySelectorAll('.btnXoaDSHSX')
+        console.log(form)
+        
+        btnKhoiPhucDSHSX.forEach((btn) => {
+            btn.addEventListener("click", function(e) {
+                e.preventDefault()
+                var id = btn.getAttribute('data-id')
+                form.action = '/admin/hangsx/'+id+'/trashHSX/khoiPhuc?_method=PATCH'
+                form.submit()
+            });
+        })
+        btnXoaDSHSX.forEach((btn) => {
+            btn.addEventListener("click", function(e) {
+                e.preventDefault()
+                var id = btn.getAttribute('data-id')
+                formXoa.action = '/admin/hangsx/'+id+'/trashHSX/xoaVinhVien?_method=DELETE'
+                formXoa.submit()
+            });
+        })
+    })
+</script>

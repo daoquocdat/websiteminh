@@ -1,9 +1,14 @@
 <div class="col-xl-10">
-    <form id="form" >
+    <form id="form" method="POST" enctype="multipart/form-data">
         <h3>Form thêm hãng sản xuất</h3>
         <div class="form-group">
             <label for="tenHangSanXuat">Tên hãng sản xuất</label>
             <input type="text" class="form-control" id="tenHangSanXuat" >
+        </div>
+        <div class="form-group">
+            <label for="hinhAnh">Hình ảnh</label>
+            <input type="file" class="form-control" name="hinhAnh" id="hinhAnh">
+        </div>
         </div>
         <button type="submit" class="btn btn-primary">Thêm</button>
     </form>
@@ -15,10 +20,20 @@
         form.addEventListener('submit', function(e){
             e.preventDefault()
             var tenHangSanXuat = document.getElementById('tenHangSanXuat').value
+            var hinhAnh = document.getElementById('hinhAnh').files
             console.log(tenHangSanXuat)
-
-            axios.post('/admin/hangsx/themHSX', {
-                tenHangSanXuat: tenHangSanXuat,
+            console.log(hinhAnh[0])
+            let formData = new FormData()
+            formData.append('tenHangSanXuat', tenHangSanXuat)
+            formData.append('hinhAnh', hinhAnh[0])
+            
+            axios.post('/admin/hangsx/themHSX', 
+                formData
+            ,{
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data'
+                }
             })
             .then((res) => {
                 console.log('thành công')

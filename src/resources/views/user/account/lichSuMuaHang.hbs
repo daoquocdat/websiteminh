@@ -1,0 +1,25 @@
+<div>
+    <div style="font-size: 24px;font-weight: 700;">
+        Lịch sử mua hàng
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Giá</th>
+                <th>Trạng thái</th>
+                <th>Ngày đặt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each dsdh}}
+                <tr>
+                    <td>{{sum @index 1}}</td>
+                    <td>{{this.tongTien}}</td>
+                    <td>{{this.trangThai}}</td>
+                    <td>{{dateFormat this.ngayDat format="MM/DD/YYYY"}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -1,5 +1,5 @@
 const Handlebars = require('handlebars')
-
+const moment = require('moment')
 module.exports = {
     sum: (a, b) => a + b,
     block_unblock_account: function (a) {
@@ -18,5 +18,9 @@ module.exports = {
         else{
             return '<div id="still_stock">Hết hàng</div>'
         }
+    },
+    dateFormat: (date,options)=>{
+        const formatToUse = (options && options.hash && options.hash.format) || "MM/DD/YYYY"
+        return moment(date).format(formatToUse);
     },
 }

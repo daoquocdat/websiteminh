@@ -163,8 +163,6 @@ class KhachHangController {
         })
         .save()
         .then((donhang) => {
-            console.log('tạo đơn hàng thành công')
-            console.log('đơn hàng', donhang)
             const dssp = req.user.gioHang.sp
             const ctdh = new ChiTietDonHang({
                 maDonHang: donhang._id,
@@ -172,8 +170,7 @@ class KhachHangController {
             })
             .save()
             .then((ctdh) =>{
-                dssp.forEach((sp, i) => {
-                    console.log('ctdh',ctdh)
+                dssp.forEach((sp, i) => {                 
                     ctdh.sp.push({
                         idSP:sp.idSanPham,
                         mau: sp.mau,
@@ -181,16 +178,21 @@ class KhachHangController {
                         ghiChu: sp.ghiChu,
                     })
                 })
-                ctdh.save()
-                DonHang.updateOne({
-                    _id: donhang._id
-                },{
-                    maChiTietDonHang: ctdh._id
-                })
-                .then(() => { console.log('cap nhat ma chi tiet don hang')})
-                .catch((err) => {console.log(err)})
-                res.json({message: 'hoan tat don hang'})
+                ctdh.save()    
             })
+            DonHang.updateOne({
+                _id: donhang._id
+            },{
+                maChiTietDonHang: ctdh._id
+            })
+            .then(() => { 
+                console.log('cap nhat ma chi tiet don hang')
+                req.user.gioHang.sp = []
+                req.user.gioHang.tongTien = 0
+                req.user.save()
+            })
+            .catch((err) => {console.log(err)})
+            res.json({message: 'hoan tat don hang'})
         })
         .catch((err) =>{
             console.log('lỗi tạo đơn hàng', err)

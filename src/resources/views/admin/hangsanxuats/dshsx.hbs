@@ -1,13 +1,20 @@
 <div class="col-xl-10">
 
-    <form id="formXoa">
+
+        <div style="font-size: 24px; font-weight: 700;">
+            Danh sách hãng sản xuất
+        </div>
         <div>
             <a href="/admin/hangsx/formThemHSX" class="btn btn-outline-info">Thêm hãng sản xuất</a>
+        </div>
+        <div>
+            <a href="/admin/hangsx/trashHSX" class="btn btn-secondary">Thùng rác</a>
         </div>
         <table class="table table-striped" id="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Logo</th>
                     <th scope="col">Tên hãng sản xuất</th>
                     <th></th>
                     <th></th>
@@ -17,9 +24,14 @@
                 {{#each dshsx}}
                     <tr>
                         <th>{{sum @index 1}}</th>
-                        <th class="tenhsx" scope="col-2">{{this.tenHangSanXuat}}</th>
+                        <th class="tenhsx" scope="col" style="width: 100px; height: 100px">
+                            <img src="/img/{{this.hinhAnh}}" alt="" width="100%"; height="100%">
+                        </th>
+                            
+                        <th class="tenhsx" scope="col-2">{{this.tenHangSanXuat}}
+                        </th>
                         <th>  
-                            <button type="submit" class="btnXoaDSHSX btn btn-danger" data-id="{{this._id}}">Xóa</button>
+                            <a href="" class="btnXoaDSHSX btn btn-danger" data-id="{{this._id}}">Xóa</button>
                         </th>
                         <th scope="col">
                             <a href="/admin/hangsx/{{this._id}}/formSuaHSX" class="btnSuaDSHSX btn btn-primary">Sửa</a>
@@ -28,41 +40,45 @@
                 {{/each}}
             </tbody>
         </table>
-    </form>
+        <form name="formXoa"></form>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function(){
-        var form = document.getElementById('form')
+        var form = document.forms['form']
         var btnXoaDSHSX = document.querySelectorAll('.btnXoaDSHSX')
         console.log(btnXoaDSHSX)
         var formXoa = document.getElementById('formXoa')
-        formXoa.addEventListener('submit', function(e){
-            e.preventDefault()
-            btnXoaDSHSX.forEach((btnXoa) => {
-                //console.log(btnXoa)
-                btnXoa.onclick = function(){           
-                    var idBtnXoa = btnXoa.getAttribute('data-id')
-                    var tenhsx = btnXoa.parentElement.parentElement.querySelector('.tenhsx').innerText
+
+            btnXoaDSHSX.forEach((btn) => {
+                console.log(btn)
+                btn.addEventListener("click", function(e) {      
+                    e.preventDefault()     
+                    var idBtnXoa = btn.getAttribute('data-id')
+                    var tenhsx = btn.parentElement.parentElement.querySelector('.tenhsx').innerText
                     var xacnhan = confirm('Bạn có muốn xóa hãng '+ tenhsx)
                     if(xacnhan == true){
-                         console.log(idBtnXoa)
-                    axios.post('/admin/hangsx/'+idBtnXoa+'/xoaHSX?_method=DELETE')
-                        .then((res) =>{
-                            console.log(res.data)
-                            if(res.data.message == 'xoa hsx thanh cong'){
-                                alert('xóa hãng sản xuất thành công!')
-                                location.assign('/admin/hangsx/dshsx')
-                            }
-                        })
-                        .catch(() => {
+                        console.log(idBtnXoa)
+                        axios.post('/admin/hangsx/'+idBtnXoa+'/xoaHSX?_method=DELETE')
+                            .then((res) =>{
+                                console.log(res.data)
+                                if(res.data.message == 'xoa hsx thanh cong'){
+                                    alert('xóa hãng sản xuất thành công!')
+                                    location.assign('/admin/hangsx/dshsx')
+                                }
+                                else if(res.data.message == 'HSX co sp ko the xoa'){
+                                    alert('HSX co sp ko the xoa!')
+                                    location.assign('/admin/hangsx/dshsx')
+                                }
+                                
+                            })
+                            .catch(() => {
                             console.log('thát bại')
                         })
-                    }
-                   
-                }
+                    }                   
+                })
             })
-        })
+        
         
     })
 </script>

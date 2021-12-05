@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const slug = require('mongoose-slug-generator')
-mongoose.plugin(slug);
+const mongooseDelete = require('mongoose-delete')
 const Schema = mongoose.Schema;
 
 const SanPham = new Schema({
@@ -23,5 +23,9 @@ const SanPham = new Schema({
     },
     ngayTao: { type: Date, default: Date.now},
 })
-
+mongoose.plugin(slug);
+SanPham.plugin(mongooseDelete,{ 
+    deleted_At: true,
+    overrideMethods: 'all' ,
+})
 module.exports = mongoose.model('SanPham',SanPham)

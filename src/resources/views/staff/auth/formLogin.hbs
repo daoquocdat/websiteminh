@@ -22,8 +22,9 @@
             var taikhoan = document.getElementById('taikhoan').value
             var matkhau = document.getElementById('matkhau').value
             var fail =document.getElementById('fail')
-            localStorage.set('taikhoan') = taikhoan
-            localStorage.set('matkhau') = matkhau
+            localStorage.setItem ('taikhoan', taikhoan);
+            localStorage.setItem ('matkhau', matkhau);
+            
             axios.post('/staff/login',{
                 taikhoan: taikhoan,
                 matkhau: matkhau

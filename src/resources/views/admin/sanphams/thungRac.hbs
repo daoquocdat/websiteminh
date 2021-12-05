@@ -1,0 +1,67 @@
+<div class="col-xl-10">
+        <div>
+            <a href="/admin/sanphams/dssp" class="">Danh sách hãng sản xuất</a>
+        </div>
+        <table class="table table-striped" id="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng còn lại</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each dssp}}
+                    <tr>
+                        <th>{{sum @index 1}}</th>
+                        <th style="height: 50px;"><img src="/img/{{this.hinhAnh}}" alt="" style="height: 100%;"></th>
+                        <th>{{this.tenSanPham}}</th>
+                        <th >{{this.gia}}</th>
+                        <th>{{this.soLuong}}</th>
+                        <th>  
+                            <a href="" class="btnXoaSP btn btn-danger" data-id="{{this._id}}">Xóa</a>
+                        </th>
+                        <th scope="col">
+                            <a href="" class="btnKhoiPhucSP btn btn-primary" data-id="{{this._id}}">Khôi phục</a>
+                        </th>
+                    </tr>
+                {{else}}
+                    Thùng rác trống!
+                {{/each}}
+            </tbody>
+        </table>
+    <form name="formKhoiPhuc" method="POST"></form>
+    <form name="formXoa" method="POST"></form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var form = document.forms['formKhoiPhuc']
+        var formXoa = document.forms['formXoa']
+        var btnKhoiPhucSP = document.querySelectorAll('.btnKhoiPhucSP')
+        var btnXoaSP = document.querySelectorAll('.btnXoaSP')
+        console.log(form)
+        
+        btnKhoiPhucSP.forEach((btn) => {
+            btn.addEventListener("click", function(e) {
+                e.preventDefault()
+                var id = btn.getAttribute('data-id')
+                form.action = '/admin/sanpham/'+id+'/trashSP/khoiPhuc?_method=PATCH'
+                form.submit()
+            });
+        })
+        btnXoaSP.forEach((btn) => {
+            btn.addEventListener("click", function(e) {
+                e.preventDefault()
+                var xacNhan = confirm('Xóa vĩnh viễn?')
+                if(xacNhan == true){
+                    var id = btn.getAttribute('data-id')
+                    formXoa.action = '/admin/sanpham/'+id+'/trashSP/xoaVinhVien?_method=DELETE'
+                    formXoa.submit()
+                }
+            });
+        })
+    })
+</script>

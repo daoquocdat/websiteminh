@@ -1,8 +1,9 @@
-<div class="col-xl-10">
-
-    <form id="form">
+<div class="col-lg-12">
         <div>
             <a href="/admin/sanpham/formThemSP" class="btn btn-outline-info">Thêm sản phẩm</a>
+        </div>
+        <div>
+            <a href="/admin/sanpham/trashSP" class="btn btn-secondary">Thùng rác</a>
         </div>
         <table class="table table-striped" id="table">
             <thead>
@@ -23,7 +24,7 @@
                         <th >{{this.gia}}</th>
                         <th>{{this.soLuong}}</th>
                         <th>  
-                            <button type="submit" class="btnXoaSP btn btn-danger" data-id="{{this._id}}">Xóa</button>
+                            <a href="" class="btnXoaSP btn btn-danger" data-id="{{this._id}}">Xóa</a>
                         </th>
                         <th scope="col">
                             <a href="/admin/sanpham/{{this._id}}/formSuaSP" class="btnSuaSP btn btn-primary">Sửa</a>
@@ -32,19 +33,19 @@
                 {{/each}}
             </tbody>
         </table>
-    </form>
+    <form name="formXoa" method="POST"></form>
 </div>
 
 
 <script>
     document.addEventListener("DOMContentLoaded", function(){
-        var form = document.getElementById('form')
+        var form = document.forms['formXoa']
         var btnXoaSP = document.querySelectorAll('.btnXoaSP')
-        form.addEventListener('submit', function(e){
-            e.preventDefault()
+
             btnXoaSP.forEach((btnXoa) => {
                 //console.log(btnXoa)
-                btnXoa.onclick = function(){           
+                btnXoa.addEventListener("click", function(e) {    
+                    e.preventDefault()        
                     var idBtnXoa = btnXoa.getAttribute('data-id')
                     console.log(idBtnXoa)
                 
@@ -63,9 +64,8 @@
                         })
                     }
                    
-                }
+                })
             })
-        })
         
     })
 </script>

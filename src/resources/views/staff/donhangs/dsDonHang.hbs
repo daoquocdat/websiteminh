@@ -1,4 +1,4 @@
-<div class="col-lg-10" id="dsDonHang">
+<div class="col-lg-12" id="dsDonHang">
     <table class="table">
         <thead>
             <tr>
@@ -16,13 +16,16 @@
                 <td>{{sum @index 1}}</td>
                 <td colspan="2">{{this.maKhachHang.hoTen}}</td>
                 <td>{{this.maKhachHang.phone}}</td>
-                <td>{{this.trangThai}}</td>
-                <td>{{this.tongTien}}</td>
+                <td class="trangThaiDB">{{this.trangThai}}</td>
+                <td class="tongTien">{{this.tongTien}}</td>
                 <td>{{this.trangThaiThanhToan}}</td>
                 <td>
                     <a href="/staff/donhang/{{this._id}}/chiTietDH" class="btn btn-info">Chi tiết đơn hàng</a>
                     <div class="trangThai">
                         <a data-id="{{this._id}}" class="xacNhan btn btn-success">Xác nhận</a>
+                        <a data-id="{{this._id}}" class="huy btn btn-danger">Hủy</a>
+                        <a data-id="{{this._id}}" class="hoanTat btn btn-primary">Hoàn tất</a>
+
                     </div>
                 </td>
             </tr>
@@ -31,13 +34,98 @@
     </table>
 </div>
 
+<script src="/js/main.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         var xacNhan = document.querySelectorAll('.xacNhan')
+        var huy = document.querySelectorAll('.huy')
+        var hoanTat = document.querySelectorAll('.hoanTat')
+        var trangThaiDB = document.querySelectorAll('.trangThaiDB')
+        var tongTien = document.querySelectorAll('.tongTien')
+
+        tongTien.forEach((tien) => {
+            console.log(tien.innerHTML)
+            tien.innerText = format_tien(tien.innerHTML, 'VND')
+        })
+        trangThaiDB.forEach((ttdh, i) => {
+            if(ttdh.innerHTML == 'Chưa xác thực'){
+                huy[i].setAttribute('style', 'display: none')
+                hoanTat[i].setAttribute('style', 'display: none')
+            }
+            else if(ttdh.innerHTML == 'Đã xác thực'){
+                ttdh.setAttribute('style', 'color: blue')
+                xacNhan[i].setAttribute('style', 'display: none')
+            }
+            else if(ttdh.innerHTML == 'Hủy'){
+                ttdh.setAttribute('style', 'color: red')
+                xacNhan[i].setAttribute('style', 'display: none')
+                huy[i].setAttribute('style', 'display: none')
+                hoanTat[i].setAttribute('style', 'display: none')
+            }
+            else if(ttdh.innerHTML == 'Hoàn tất'){
+                ttdh.setAttribute('style', 'color: green')
+                xacNhan[i].setAttribute('style', 'display: none')
+                huy[i].setAttribute('style', 'display: none')
+                hoanTat[i].setAttribute('style', 'display: none')
+            }
+        })
+
         xacNhan.forEach((btn) =>{
             btn.onclick = function(e){
                 var id =btn.getAttribute('data-id')
                 axios.post('/staff/donhang/' + id + '/xacNhan')
+                .then((res) => {
+                    var tt = btn.parentElement.parentElement.parentElement.querySelector('.trangThaiDB')
+                    var button = btn.parentElement
+                    console.log(button)
+                    var btnHuy = button.querySelector('.huy')
+                    var btnXacNhan = button.querySelector('.xacNhan')
+                    var btnHoanTat = button.querySelector('.hoanTat')
+                    btnHoanTat.removeAttribute('style')
+                    btnHuy.removeAttribute('style')
+                    btnXacNhan.setAttribute('style', 'display:none')
+                    tt.innerHTML = 'Đã xác thực'
+                    tt.setAttribute('style', 'color: blue;')
+                })
+            }
+        })
+
+        huy.forEach((btn) =>{
+            btn.onclick = function(e){
+                var id =btn.getAttribute('data-id')
+                var lydo = prompt('Nhập lý do hủy đơn')
+                if (lydo != null){
+                    console.log(lydo)
+                    axios.post('/staff/donhang/' + id + '/huy',{
+                        lydo: lydo
+                    })
+                    .then((res) => {
+                        var tt = btn.parentElement.parentElement.parentElement.querySelector('.trangThaiDB')
+                        var button = btn.parentElement
+                        console.log(button)
+                        button.setAttribute('style', 'display:none')
+                        tt.innerHTML = 'Hủy'
+                        tt.setAttribute('style', 'color: red;')
+                    })
+                }
+            }
+        })
+
+        hoanTat.forEach((btn) =>{
+            btn.onclick = function(e){
+                var id =btn.getAttribute('data-id')
+                var xacNhan = confirm('Hoàn tất đơn hàng?')
+                if(xacNhan == true){
+                    axios.post('/staff/donhang/' + id + '/hoanTat')
+                    .then((res) => {
+                        var tt = btn.parentElement.parentElement.parentElement.querySelector('.trangThaiDB')
+                        var button = btn.parentElement
+                        console.log(button)
+                        button.setAttribute('style', 'display:none')
+                        tt.innerHTML = 'Hoàn tất'
+                        tt.setAttribute('style', 'color: green;')
+                    })
+                }
             }
         })
     })

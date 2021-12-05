@@ -3,25 +3,41 @@ const router = express.Router()
 
 const khachHangController = require('../../app/controllers/user/KhachHangController')
 const sanPhamController = require('../../app/controllers/user/SanPhamController')
-const siteController = require('../../app/controllers/user/siteController')
+const searchController = require('../../app/controllers/user/SearchController')
+const authController = require('../../app/controllers/user/AuthController')
+const accountController = require('../../app/controllers/user/AccountController')
 
 const {checkUser} = require('../../../src/app/middlewares/authMiddleware')
-//Sản phẩm controller
-router.get('/sanpham/dssp', sanPhamController.dssp)
-router.get('/sanpham/:slug/chitietsp', sanPhamController.chitietsp)
-//Khách hàng controller
-router.post('/:id/themVaoGioHang', khachHangController.themvaogiohang)
-router.post('/:id/xoaKhoiGioHang', khachHangController.xoaKhoiGioHang)
-router.get('/xemGioHang', khachHangController.xemGioHang)
-router.post('/xemGioHang', khachHangController.xemGioHangPost)
 
-router.get('/diaChiGiaoHang', khachHangController.diaChiGiaoHang)
-router.post('/diaChiGiaoHang', khachHangController.diaChiGiaoHangPost)
-router.get('/phuongThucThanhToan', khachHangController.phuongThucThanhToan)
-router.post('/phuongThucThanhToan', khachHangController.phuongThucThanhToanPost)
-router.get('/kiemTraDonHang', khachHangController.kiemTraDonHang)
-router.post('/donhang/xacThuc', khachHangController.xacThucDonHang)
-router.get('/hoanTatDonHang', khachHangController.hoanTatDonHang)
+//đăng nhập đăng ký
+
+router.get('/register', authController.registerGet)
+router.post('/register', authController.registerPost)
+router.get('/login', authController.loginGet)
+router.post('/login', authController.loginPost)
+router.get('/logout', authController.logout_get)
+//Sản phẩm controller
+router.get('/sanpham/dssp',checkUser, sanPhamController.dssp)
+router.get('/sanpham/:slug/chitietsp',checkUser, sanPhamController.chitietsp)
+//Khách hàng controller
+router.post('/:id/themVaoGioHang',checkUser, khachHangController.themvaogiohang)
+router.post('/:id/xoaKhoiGioHang',checkUser, khachHangController.xoaKhoiGioHang)
+router.get('/xemGioHang',checkUser, khachHangController.xemGioHang)
+router.post('/xemGioHang',checkUser, khachHangController.xemGioHangPost)
+//tài khoản
+router.get('/diaChi',checkUser, accountController.diaChi)
+router.delete('/:id/xoaDiaChi',checkUser, accountController.xoaDiaChi)
+router.get('/lichSuMuaHang',checkUser, accountController.lichSuMuaHang)
+//Tìm kiếm
+router.get('/search', searchController.search)
+//đơn hàng
+router.get('/diaChiGiaoHang',checkUser, khachHangController.diaChiGiaoHang)
+router.post('/diaChiGiaoHang',checkUser, khachHangController.diaChiGiaoHangPost)
+router.get('/phuongThucThanhToan',checkUser, khachHangController.phuongThucThanhToan)
+router.post('/phuongThucThanhToan',checkUser, khachHangController.phuongThucThanhToanPost)
+router.get('/kiemTraDonHang',checkUser, khachHangController.kiemTraDonHang)
+router.post('/donhang/xacThuc',checkUser, khachHangController.xacThucDonHang)
+router.get('/hoanTatDonHang',checkUser, khachHangController.hoanTatDonHang)
 router.get('/',checkUser, sanPhamController.dssp)
 
 module.exports = router

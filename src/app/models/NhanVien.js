@@ -32,6 +32,10 @@ const NhanVien = new Schema({
     },
     trangThai: {
         type: String,
+    },
+    chucVu: {
+        type: String,
+        default: 'nhan vien'
     }
 })
 

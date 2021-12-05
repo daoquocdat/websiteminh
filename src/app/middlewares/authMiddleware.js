@@ -47,7 +47,7 @@ const checkStaff = (req, res, next) =>{
     const token = req.cookies.jwt
     console.log(token)
     if(token){
-        jwt.verify(token, 'day la nhan vien',async (err, decodedToken)=>{
+        jwt.verify(token, 'next user secret',async (err, decodedToken)=>{
             if(err){
                 res.locals.staff = null
                 res.status(500).json('token khong hop le')
@@ -68,11 +68,11 @@ const checkStaff = (req, res, next) =>{
 }
 
 const staffInfo = async(req, res, next)=>{
-    console.log("req staff info",req.body)
-    let staff = await NhanVien.findOne({taiKhoanDangNhap: req.body.taikhoan})
-    req.staff = staff
-    res.locals.staff = staff
-    console.log("user middlewares", staff)
+    console.log("req staff info",req.data)
+    // let staff = await NhanVien.findOne({taiKhoanDangNhap: req.body.taikhoan})
+    // req.staff = staff
+    // res.locals.staff = staff
+    // console.log("user middlewares", staff)
     next()
 }
 
