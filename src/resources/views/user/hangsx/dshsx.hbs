@@ -1,0 +1,22 @@
+<div class="dssp">
+    <div class="row">
+        {{#each dshsx}}
+            <div class="col-lg-3 items">
+                <div class="card">
+                    <a href="/hangsx/{{this.slug}}/chitiet" class="items-img">
+                        <img class="" src="/img/{{this.hinhAnh}}" alt="Card image cap" style="width: 100%;height: 200px;">
+                    </a>
+                    <div class="items-element">
+                        <a href="/sanpham/{{this.slug}}/chitiet">
+                            <h4>
+                                <b>{{this.tenHangSanXuat}}</b>
+                            </h4>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        {{/each}}   
+    </div>
+</div>
+    

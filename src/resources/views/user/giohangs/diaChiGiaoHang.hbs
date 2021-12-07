@@ -66,9 +66,9 @@
         //lấy ra form
         var form = document.getElementById('form')
         if(form){
-            giatri = 1
-            noiDung.setAttribute('style','display:none;')
-            diaChiDaCo.removeAttribute('disabled')
+            giatri = 0
+            //noiDung.setAttribute('style','display:none;')
+            //diaChiDaCo.removeAttribute('disabled')
         }
         var chonKieu = document.querySelectorAll("input[name='chonDiaChi']").forEach((input) => {
             input.addEventListener('change', function(el){
@@ -91,7 +91,7 @@
         //giatri = 0 -> lấy địa chỉ mới
         hoanthanh.onclick = function(e){
             e.preventDefault()
-            if(form){
+            if(!form){
                 var valueIdOption = diaChiDaCo.options[diaChiDaCo.selectedIndex].value;
             }
             if(giatri == 1){

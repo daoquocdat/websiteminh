@@ -96,7 +96,7 @@ class AuthController {
     }
 
     logout_get(req, res, next){
-        res.cookies('jwt', '', { maxAge: 1 })
+        res.cookie('jwt', '', { maxAge: 1 })
         res.redirect('/')
     }
 }

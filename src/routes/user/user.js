@@ -6,6 +6,7 @@ const sanPhamController = require('../../app/controllers/user/SanPhamController'
 const searchController = require('../../app/controllers/user/SearchController')
 const authController = require('../../app/controllers/user/AuthController')
 const accountController = require('../../app/controllers/user/AccountController')
+const hangsxController = require('../../app/controllers/user/HangSanXuatController.js')
 
 const {checkUser} = require('../../../src/app/middlewares/authMiddleware')
 
@@ -19,6 +20,9 @@ router.get('/logout', authController.logout_get)
 //Sản phẩm controller
 router.get('/sanpham/dssp',checkUser, sanPhamController.dssp)
 router.get('/sanpham/:slug/chitietsp',checkUser, sanPhamController.chitietsp)
+//Hãng sản xuât
+router.get('/hangsx/dshsx',checkUser, hangsxController.dshsx)
+router.get('/hangsx/:slug/chitiet',checkUser, hangsxController.chitiet)
 //Khách hàng controller
 router.post('/:id/themVaoGioHang',checkUser, khachHangController.themvaogiohang)
 router.post('/:id/xoaKhoiGioHang',checkUser, khachHangController.xoaKhoiGioHang)

@@ -2,6 +2,7 @@
 
 <div class="viewCard">
     <table class="table table-striped">
+        <div id="fail" style="color:red"></div>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -51,6 +52,7 @@
     document.addEventListener('DOMContentLoaded', function(){
         var btnRemove = document.querySelectorAll('.btnRemove')
         var btnConfirm = document.getElementById('btnConfirm')
+        var fail = document.getElementById('fail')
         console.log(btnConfirm)
 
         //Xóa sp khỏi giỏ hàng
@@ -77,7 +79,10 @@
                 var amountData = row.querySelector('.amountData').innerText
                 //cắm cờ
                 
-
+                if(note == ''){
+                    fail.innerHTML = 'Vui long nhap ghi chu!'
+                    flag = 0
+                }
                 if(parseInt(amountData) < 1){    
                     console.log(amountData ,' < ' , amount)
                     flag = 0

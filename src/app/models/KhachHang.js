@@ -58,7 +58,7 @@ const KhachHang = new Schema({
 KhachHang.statics.login = async function(phone, password){
     const user = await this.findOne({ phone })
     if(user){
-        const auth = await bcrypt.compare(password, user.matKhau)
+        const auth = await bcrypt.compare(password, user.matKhau)//123456 => 'dsdsdlsdkjaldkjal'=> 123456
         if(auth){
             if(user.trangThai == 'khóa'){
                 console.log('tai khoan bi khoa!')

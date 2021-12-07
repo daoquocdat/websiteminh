@@ -6,7 +6,7 @@ class SearchController {
     //[GET] /search
     search(req, res){
         SanPham.find({ 
-            tenSanPhamm: {$regex: req.query.search, $options: 'i'} 
+            tenSanPham: {$regex: req.query.search, $options: 'i'} 
         })
         .then(dssp =>{
             console.log(dssp)

@@ -55,7 +55,7 @@ class HangSanXuatController {
         console.log("req.file",req.file)
         const hangSX = new HangSanXuat({
             tenHangSanXuat: req.body.tenHangSanXuat,
-            //hinhAnh: req.file.filename,
+            hinhAnh: req.file.filename,
             danhSachSanPham: []
         })
         .save()

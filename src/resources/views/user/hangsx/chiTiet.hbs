@@ -1,0 +1,26 @@
+<div class="dssp">
+    <div class="row">
+        {{#each dssp}}
+            <div class="col-lg-3 items">
+                <div class="card">
+                    <a href="/sanpham/{{this.slug}}/chitietsp" class="items-img">
+                        <img class="" src="/img/{{this.hinhAnh}}" alt="Card image cap" style="width: 100%;height: 200px;">
+                    </a>
+                    <div class="items-element">
+                        <a href="/sanpham/{{this.slug}}/chitietsp">
+                            <h4>
+                                <b>{{this.tenSanPham}}</b>
+                            </h4>
+                        </a>
+                        <div>Kích thước: {{this.kichThuoc}}</div>
+                        <p class="gia">Giá: {{this.gia}} VND</p>
+                        <center>  
+                            <a href="/sanpham/{{this.slug}}/chitietsp" class="btn btn-primary">Chi tiết sản phẩm</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        {{/each}}   
+    </div>
+</div>
+    
