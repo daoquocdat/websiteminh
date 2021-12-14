@@ -1,0 +1,31 @@
+<div class="col-xl-10">
+    <table class="table table-striped" id="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Mã đơn hàng</th>
+                <th>Số tiền</th>
+                <th>Số điện thoại khách hàng</th>
+                <th>Đánh giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each dshd}}
+                <tr>
+                    <th>{{sum @index 1}}</th>
+                    <td>{{this._id}}</td>
+                    <td class="tongTien">{{this.tongTien}}</td>
+                    <td>{{this.maKhachHang.phone}}</td>
+                    <td>{{this.maDanhGia.noiDung}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<script src="/js/main.js"></script>
+<script>
+    var tongTien = document.querySelectorAll('.tongTien')
+    tongTien.forEach((tien) => {
+        tien.innerHTML = format_tien(tien.innerHTML, '')
+    })
+</script>

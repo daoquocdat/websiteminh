@@ -84,11 +84,14 @@
                 }
             });
         });
-
+        if(chonKieu){
+            noiDung.setAttribute('style','display:none;')
+            diaChiDaCo.removeAttribute('disabled')
+        }
         
         //chuyển sang bước tiếp theo
-        //giatri = 1 -> lấy địa chỉ cũ
         //giatri = 0 -> lấy địa chỉ mới
+        //giatri = 1 -> lấy địa chỉ cũ
         hoanthanh.onclick = function(e){
             e.preventDefault()
             if(!form){

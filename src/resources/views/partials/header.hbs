@@ -30,16 +30,25 @@
       </form>
     </div>
     {{#if user}}
-    <a href="/xemGioHang" class="gioHang">Xem giỏ hàng</a>
+    <a href="/xemGioHang" class="gioHang">
+      <i class="fa fa-shopping-cart"> </i>
+       {{#if (isdefined user.gioHang.tongSanPham)}}
+          <div class="item">({{user.gioHang.tongSanPham}})</div>  
+        {{else}}
+          <div class="item">Giỏ hàng</div> 
+        {{/if}} 
+    </a>
     
     <div class="dropdown">
-   <div  onclick="hamDropdown()"  class="nut_dropdown">{{user.hoTen}}</div>
-   <div class="noidung_dropdown">
-     <a href="/lichSuMuaHang">Lịch sử mua hàng</a>
-     <a href="/diaChi">Địa chỉ</a>
-     <a href="/logout">Đăng xuất</a>
-   </div>
- </div>
+      <div  onclick="hamDropdown()"  class="nut_dropdown">
+        <img src="/img/{{user.hinhAnh}}">{{user.hoTen}}
+      </div>
+      <div class="noidung_dropdown">
+        <a href="/lichSuMuaHang">Lịch sử mua hàng</a>
+        <a href="/diaChi">Địa chỉ</a>
+        <a href="/logout">Đăng xuất</a>
+      </div>
+    </div>
     {{else}}
       <div class="row dangNhapDangKy">
         <a href="/register">Đăng ký</a>

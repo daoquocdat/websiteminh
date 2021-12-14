@@ -23,4 +23,8 @@ module.exports = {
         const formatToUse = (options && options.hash && options.hash.format) || "MM/DD/YYYY"
         return moment(date).format(formatToUse);
     },
+
+    isdefined: function (value) {
+        return value !== 0;
+    },
 }

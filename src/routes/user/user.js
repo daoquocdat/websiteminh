@@ -6,8 +6,10 @@ const sanPhamController = require('../../app/controllers/user/SanPhamController'
 const searchController = require('../../app/controllers/user/SearchController')
 const authController = require('../../app/controllers/user/AuthController')
 const accountController = require('../../app/controllers/user/AccountController')
-const hangsxController = require('../../app/controllers/user/HangSanXuatController.js')
+const hangsxController = require('../../app/controllers/user/HangSanXuatController')
+const danhGiaController = require('../../app/controllers/user/DanhGiaController')
 
+const upload = require('../../../src/app/middlewares/multer')
 const {checkUser} = require('../../../src/app/middlewares/authMiddleware')
 
 //đăng nhập đăng ký
@@ -31,7 +33,13 @@ router.post('/xemGioHang',checkUser, khachHangController.xemGioHangPost)
 //tài khoản
 router.get('/diaChi',checkUser, accountController.diaChi)
 router.delete('/:id/xoaDiaChi',checkUser, accountController.xoaDiaChi)
+router.get('/themDiaChi',checkUser, accountController.themDiaChi)
+router.post('/themDiaChi',checkUser, accountController.themDiaChiPost)
 router.get('/lichSuMuaHang',checkUser, accountController.lichSuMuaHang)
+router.get('/thongTinKhachHang',checkUser, accountController.thongTinKhachHang)
+router.post('/thongTinKhachHang',checkUser,upload.single('hinhAnh'), accountController.thongTinKhachHangPut)
+//đánh giá sản phẩm
+router.post('/danhGia',checkUser, danhGiaController.danhGia)
 //Tìm kiếm
 router.get('/search', searchController.search)
 //đơn hàng

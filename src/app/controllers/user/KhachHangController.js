@@ -25,6 +25,7 @@ class KhachHangController {
         req.user.addToCart(idSP, soLuong,mau)
         .then((a) =>{
             const user = req.user
+            console.log(user)
             res.json({
                 message:"Thêm vào giỏ hàng thành công",
                 user

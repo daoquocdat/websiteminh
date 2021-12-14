@@ -6,6 +6,7 @@ const khachHangController = require('../../app/controllers/admin/KhachHangAdminC
 const hangSanXuatController = require('../../app/controllers/admin/HangSanXuatController')
 const authController = require('../../app/controllers/admin/AuthController')
 const nhanVienController = require('../../app/controllers/admin/NhanVienController')
+const hoaDonController = require('../../app/controllers/admin/HoaDonController')
 
 //Đăng nhập đăng xuất
 router.get('/login', authController.loginGet)
@@ -43,6 +44,8 @@ router.get('/nhanvien/dsnv', nhanVienController.dsnv)
 router.get('/nhanvien/:id/formSua', nhanVienController.formSua)
 router.put('/nhanvien/:id/sua', nhanVienController.sua)
 router.post('/nhanvien/:id/khoaNV', nhanVienController.khoaNV)
-
+//hóa đơn
+router.get('/hoadon/dshd', hoaDonController.dshd)
+//index
 router.get('/', sanPhamController.index)
 module.exports = router

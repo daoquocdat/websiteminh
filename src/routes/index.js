@@ -9,5 +9,6 @@ function router(app){
     app.use('/admin', adminRouter)
     app.use('/staff', staffRouter)
     app.use('/', userRouter)
+    
 }
 module.exports = router;

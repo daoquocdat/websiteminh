@@ -1,0 +1,48 @@
+<div class="offset-lg-3 col-lg-6 noiDung">
+    <form id="form">
+        <div class="form-group">
+            <label for="soNha">Số nhà</label>
+            <input type="text" required class="form-control" id="soNha" placeholder="vd: Số 1 đường Nguyễn Văn A">
+        </div>
+        <div class="form-group">
+            <label for="phuongXa">Phường/Xã</label>
+            <input type="text" required class="form-control" id="phuongXa" placeholder="vd: Phường 4">
+        </div>
+        <div class="form-group">
+            <label for="quanHuyen">Quận/Huyện</label>
+            <input type="text" required class="form-control" id="quanHuyen" placeholder="vd: Quận 5">
+        </div>
+        <div class="form-group">
+            <label for="tinhTP">Tỉnh/Thành phố</label>
+            <input type="text" required class="form-control" id="tinhTP" placeholder="vd: thành phố Hồ Chí Minh">
+        </div>    
+        <button id="hoanthanh" type="submit" class="btn btn-primary">Hoàn tất</button>
+    </form>
+</div>
+
+<script>
+    var form = document.getElementById('form')
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        var soNha = document.getElementById('soNha')
+        var phuongXa = document.getElementById('phuongXa')
+        var quanHuyen = document.getElementById('quanHuyen')
+        var tinhTP = document.getElementById('tinhTP')
+
+        axios.post('/themDiaChi', {
+            soNha: soNha.value,
+            phuongXa: phuongXa.value,
+            quanHuyen: quanHuyen.value,
+            tinhTP: tinhTP.value,
+        })
+        .then((result) => {
+            if(result.data.message == 'thêm địa chỉ thành công'){
+                alert('thêm địa chỉ thành công')
+                location.assign('/diaChi')
+            }
+        })
+        .catch((err) => {
+            console.log('lỗi', err)
+        })
+    })
+</script>

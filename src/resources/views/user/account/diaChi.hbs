@@ -1,4 +1,5 @@
 <div>
+    <a href="/themDiaChi" class="btn btn-info">Thêm địa chỉ mới</a>
     <div style="font-size: 24px;font-weight: 700;">Địa chỉ khách hàng</div>
     <table class="table">
         <thead>
@@ -42,7 +43,7 @@
                     console.log(res.data)
                     if(res.data.message == 'xoa dia chi thanh cong'){
                         alert('xóa địa chỉ thành công!')
-                        location.assign('/diachi')
+                        location.assign('/diaChi')
                     }               
                 })
                 .catch((err) => {

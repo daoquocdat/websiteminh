@@ -10,6 +10,10 @@ const DonHang = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'KhachHang',
     },
+    maDanhGia: {
+        type: Schema.Types.ObjectId,
+        ref: 'DanhGia',
+    },
     maChiTietDonHang: {
         type: Schema.Types.ObjectId,
         ref: 'ChiTietDonHang',

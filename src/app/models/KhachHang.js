@@ -41,6 +41,10 @@ const KhachHang = new Schema({
                 },
             }
         ],
+        tongSanPham:{
+            type: Number,
+            default: 0
+        },
         tongTien: {
             type: Number
         }
@@ -85,6 +89,7 @@ KhachHang.methods.addToCart = async function (idSPInput,soLuongInput, mauInput, 
                 ghiChu: ghiChuInput
             })
             gioHang.tongTien = sp.gia * soLuongInput
+            gioHang.tongSanPham++
         }else{
             const isExisting = gioHang.sp.findIndex(objInItems => {
                 return new String(objInItems.idSanPham).trim() == String(sp._id).trim()
@@ -100,6 +105,7 @@ KhachHang.methods.addToCart = async function (idSPInput,soLuongInput, mauInput, 
                     mau: mauInput,
                     ghiChu: ghiChuInput
                 })
+                gioHang.tongSanPham++
             }
             if(!gioHang.tongTien){
                 gioHang.tongTien = 0

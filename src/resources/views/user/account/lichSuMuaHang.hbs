@@ -9,6 +9,7 @@
                 <th>Giá</th>
                 <th>Trạng thái</th>
                 <th>Ngày đặt</th>
+                <th>Đánh giá</th>
             </tr>
         </thead>
         <tbody>
@@ -16,10 +17,60 @@
                 <tr>
                     <td>{{sum @index 1}}</td>
                     <td>{{this.tongTien}}</td>
-                    <td>{{this.trangThai}}</td>
+                    <td class="trangThai">{{this.trangThai}}</td>
                     <td>{{dateFormat this.ngayDat format="MM/DD/YYYY"}}</td>
+                    <td>
+                        <button class="btn btn-info vietDanhGia" data-id="{{this._id}}">Viết đánh giá</button>
+                    </td>
+                    
+                </tr>
+                <tr class="text">
+                    <td colspan="5" class="textEl" data-id="{{this._id}}">
+                        
+                    </td>
                 </tr>
             {{/each}}
         </tbody>
     </table>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var vietDanhGia = document.querySelectorAll('.vietDanhGia')
+        var trangThai = document.querySelectorAll('.trangThai')
+        
+        var flag = 0
+        trangThai.forEach((tt, i) =>{
+            if(tt.innerHTML != 'Hoàn tất'){
+                vietDanhGia[i].setAttribute('style','display: none;')
+            }
+        })
+        vietDanhGia.forEach((el, i) => {
+            el.addEventListener('click', function(e){
+                var text = el.parentElement.parentElement.parentElement.querySelectorAll('.text')[i].querySelector('.textEl')               
+                text.innerHTML = `<textarea class="textarea" cols="100%" rows="3"></textarea>
+                    <button class="btn btn-primary guiDanhGia" style="height: 100%;margin-bottom: 50px">Gửi đánh giá</button>
+                `
+                el.remove()
+                flag = 1
+                if(flag == 1){
+                    
+                    var guiDanhGia = document.querySelectorAll('.guiDanhGia')
+                    guiDanhGia.forEach((danhgia) => {
+                        danhgia.addEventListener('click',function(){
+                            var textarea = document.querySelector('.textarea')
+                            var idDonHang = el.getAttribute('data-id')
+                            axios.post('/danhGia',{
+                                danhGia: textarea.value,
+                                idDonHang: idDonHang,
+                            })
+                        })
+                    })
+                }
+            })
+            
+        })
+        
+        
+    })
+</script>
