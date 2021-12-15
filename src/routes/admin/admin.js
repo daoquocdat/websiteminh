@@ -12,7 +12,7 @@ const hoaDonController = require('../../app/controllers/admin/HoaDonController')
 router.get('/login', authController.loginGet)
 router.post('/login', authController.loginPost)
 router.get('/logout', authController.logout_get)
-///
+///sản phẩm
 router.get('/sanpham/formThemSP', sanPhamController.themSanPham)
 router.post('/sanpham/themSP',upload.single('hinhAnh'), sanPhamController.themSanPhamPost)
 router.get('/sanpham/dsSP', sanPhamController.dsSanPham)
@@ -46,6 +46,7 @@ router.put('/nhanvien/:id/sua', nhanVienController.sua)
 router.post('/nhanvien/:id/khoaNV', nhanVienController.khoaNV)
 //hóa đơn
 router.get('/hoadon/dshd', hoaDonController.dshd)
+router.get('/hoadon/:id/chiTietHoaDon', hoaDonController.chiTietHoaDon)
 //index
 router.get('/', sanPhamController.index)
 module.exports = router

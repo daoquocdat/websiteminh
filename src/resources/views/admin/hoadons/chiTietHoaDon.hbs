@@ -1,0 +1,88 @@
+<div class=" col-lg-12" id="chiTietDonHang">
+    <a href="/admin/hoadon/dshd" class="btn btn-primary">Quay lại</a>
+    <div class="tieuDe">
+        Thông tin hóa đơn
+    </div> 
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Giá/1 sản phẩm</th>
+                <th scope="col">Màu</th>
+                <th scope="col">Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each donhang.maChiTietDonHang.sp}}
+                <tr>
+                    <td>{{sum @index 1}}</td>
+                    <td>{{this.idSP.tenSanPham}}</td>
+                    <td>{{this.soLuong}}</td>
+                    <td class="gia">{{this.idSP.gia}}</td>
+                    <td>{{this.mau}}</td>
+                    <td>{{this.ghiChu}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+
+    <div class="thongTin">
+        <div class="diaChi col-lg-4">   
+            <div class="tieuDe">
+              Địa chỉ giao hàng:
+            </div> 
+            <div hidden>
+                <span id="idDiaChi"></span>         
+            </div>   
+            <div>Số nhà:
+                <span id="soNha">{{donhang.maDiaChi.soNha}}</span>         
+            </div>
+            <div>Phường/xã:
+                <span id="phuongXa">{{donhang.maDiaChi.phuongXa}}</span>
+            </div>
+            <div>Quận/huyện:
+                <span id="quanHuyen">{{donhang.maDiaChi.quanHuyen}}</span>
+            </div>
+            <div>Tỉnh/Thành phố:
+                <span id="tinhTP">{{donhang.maDiaChi.tinhTP}}</span>
+            </div>
+        </div>
+
+        <div class="tinhTien offset-lg-4 col-lg-4">
+            <div class="tieuDe">Thanh toán: {{donhang.trangThaiThanhToan}}</div>
+            <div class="tien">
+                <span class="col-lg-6">
+                    Phí giao hàng
+                </span>
+                <span class="col-lg-6">
+                    20000
+                </span>
+            </div>
+            <div class="tien">  
+                <span class="col-lg-6">
+                    Tổng tiền hàng: 
+                </span>
+                <span class="col-lg-6" >
+                    {{donhang.tongTienHang}}
+                </span>
+            </div>
+            <div class="tien">
+                <span class="col-lg-6">
+                    Tổng tiền: 
+                </span>
+                <span class="col-lg-6" id="tongTien">
+                    {{donhang.tongTien}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/main.js"></script>
+<script >
+    var tongTien = document.getElementById('tongTien')
+    tongTien.innerText = format_tien(tongTien.innerText, 'VND')
+</script>

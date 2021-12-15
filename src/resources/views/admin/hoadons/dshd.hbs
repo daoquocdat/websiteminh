@@ -7,6 +7,7 @@
                 <th>Số tiền</th>
                 <th>Số điện thoại khách hàng</th>
                 <th>Đánh giá</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -17,6 +18,9 @@
                     <td class="tongTien">{{this.tongTien}}</td>
                     <td>{{this.maKhachHang.phone}}</td>
                     <td>{{this.maDanhGia.noiDung}}</td>
+                    <td>
+                        <a href="/admin/hoadon/{{this._id}}/chiTietHoaDon">Chi tiết hóa đơn</a>
+                    </td>
                 </tr>
             {{/each}}
         </tbody>
