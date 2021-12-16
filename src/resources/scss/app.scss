@@ -601,6 +601,7 @@ html, body {
       width: 100%;
       input{
         padding-right: 16px;
+        border-radius: 5px;
       }
       button{
         margin-left: -6px;
@@ -616,7 +617,7 @@ html, body {
   }
   .gioHang{
     padding: 16px;
-    margin-right: 16px;
+    width: 140px;
     display: flex;
     color: #fff !important;
     text-decoration: none;
@@ -624,7 +625,7 @@ html, body {
       font-size: 36px;
     }
     .item{
-
+      width: 70px;
       color: blue;
     }
   }

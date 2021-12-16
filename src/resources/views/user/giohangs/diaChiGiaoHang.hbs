@@ -60,15 +60,15 @@
         //Biến lấy địa chỉ
         var noiDung = document.querySelector('.noiDung')
         var diaChiDaCo = document.getElementById('diaChiDaCo')
-        var giatri = 0
+        var giatri = 1
         //nút xác nhận địa chỉ
         var hoanthanh = document.getElementById('hoanthanh')
         //lấy ra form
         var form = document.getElementById('form')
-        if(form){
-            giatri = 0
-            //noiDung.setAttribute('style','display:none;')
-            //diaChiDaCo.removeAttribute('disabled')
+        var formDiaChiCu = document.getElementById('form1')
+        if(form){ 
+            noiDung.setAttribute('style','display:none;')
+            diaChiDaCo.removeAttribute('disabled')
         }
         var chonKieu = document.querySelectorAll("input[name='chonDiaChi']").forEach((input) => {
             input.addEventListener('change', function(el){
@@ -93,10 +93,12 @@
         //giatri = 0 -> lấy địa chỉ mới
         //giatri = 1 -> lấy địa chỉ cũ
         hoanthanh.onclick = function(e){
+            console.log(giatri)
             e.preventDefault()
-            if(!form){
+            if(formDiaChiCu){
                 var valueIdOption = diaChiDaCo.options[diaChiDaCo.selectedIndex].value;
             }
+            console.log(valueIdOption)
             if(giatri == 1){
                 axios.post('/diaChiGiaoHang', {
                     maDiaChi: valueIdOption,

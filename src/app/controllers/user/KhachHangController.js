@@ -190,6 +190,7 @@ class KhachHangController {
                 console.log('cap nhat ma chi tiet don hang')
                 req.user.gioHang.sp = []
                 req.user.gioHang.tongTien = 0
+                req.user.gioHang.tongSanPham = 0
                 req.user.save()
             })
             .catch((err) => {console.log(err)})
