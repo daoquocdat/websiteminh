@@ -9,11 +9,19 @@ const {mongooseToObject} = require('../../../util/mongoose')
 class DonHangController {
     
     index(req, res,next){
-        DonHang.find({}).populate('maKhachHang')
+        DonHang.find({$or: [{
+            trangThai: 'Đã xác thực'
+        },
+        {
+            trangThai: 'Chưa xác thực'
+        },
+        
+    ]
+    }).populate('maKhachHang')
         .then((donhang) => {
             res.render('staff/donhangs/dsDonHang',{
                 donhang: mutipleMongooseToObject(donhang),
-                layout: 'admin'
+                layout: 'staff'
             })
         })
         .catch((err) => {
@@ -21,11 +29,23 @@ class DonHangController {
         })
     }
     dsdh(req, res, next){
-        DonHang.find({}).populate('maKhachHang')
+        DonHang.find({$or: [{
+            trangThai: 'Đã xác thực'
+        },
+        {
+            trangThai: 'Chưa xác thực'
+        },
+        
+    ]
+    }).populate([{
+            path: 'maKhachHang',
+           },{
+            path: 'maDanhGia',
+           }])
         .then((donhang) => {
             res.render('staff/donhangs/dsDonHang',{
                 donhang: mutipleMongooseToObject(donhang),
-                layout: 'admin'
+                layout: 'staff'
             })
         })
         .catch((err) => {
@@ -46,7 +66,7 @@ class DonHangController {
             console.log(donhang)
             res.render('staff/donhangs/chiTietDonHang', {
                 donhang: mongooseToObject(donhang),
-                layout: 'admin'
+                layout: 'staff'
             })
         })
     }
@@ -73,7 +93,7 @@ class DonHangController {
             _id: req.params.id
         }, {
             trangThai: 'Hủy',
-            lydo: req.body.lydo
+            lyDo: req.body.lydo
         })
         .then(() => {
            console.log('hủy thành công') 

@@ -1,4 +1,4 @@
-<div class="col-xl-10">
+<div class="dshd">
     <table class="table table-striped" id="table">
         <thead>
             <tr>
@@ -6,6 +6,8 @@
                 <th scope="col">Mã đơn hàng</th>
                 <th>Số tiền</th>
                 <th>Số điện thoại khách hàng</th>
+                <th>Trạng thái</th>
+                <th>Lý do</th>
                 <th>Đánh giá</th>
                 <th></th>
             </tr>
@@ -17,9 +19,11 @@
                     <td>{{this._id}}</td>
                     <td class="tongTien">{{this.tongTien}}</td>
                     <td>{{this.maKhachHang.phone}}</td>
+                    <td class="trangThai">{{this.trangThai}}</td>
+                    <td>{{this.lyDo}}</td>
                     <td>{{this.maDanhGia.noiDung}}</td>
                     <td>
-                        <a href="/admin/hoadon/{{this._id}}/chiTietHoaDon">Chi tiết hóa đơn</a>
+                        <a class="btn btn-info" href="/admin/hoadon/{{this._id}}/chiTietHoaDon">Chi tiết hóa đơn</a>
                     </td>
                 </tr>
             {{/each}}
@@ -29,7 +33,13 @@
 <script src="/js/main.js"></script>
 <script>
     var tongTien = document.querySelectorAll('.tongTien')
+    var trangThai = document.querySelectorAll('.trangThai')
     tongTien.forEach((tien) => {
         tien.innerHTML = format_tien(tien.innerHTML, '')
+    })
+    trangThai.forEach((el) => {
+        if(el.innerHTML == 'Hủy'){
+            el.setAttribute('style', 'color:red;')
+        }
     })
 </script>

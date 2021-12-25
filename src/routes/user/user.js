@@ -11,6 +11,7 @@ const danhGiaController = require('../../app/controllers/user/DanhGiaController'
 
 const upload = require('../../../src/app/middlewares/multer')
 const {checkUser} = require('../../../src/app/middlewares/authMiddleware')
+const {requireAuth} = require('../../../src/app/middlewares/authMiddleware')
 
 //đăng nhập đăng ký
 
@@ -26,7 +27,7 @@ router.get('/sanpham/:slug/chitietsp',checkUser, sanPhamController.chitietsp)
 router.get('/hangsx/dshsx',checkUser, hangsxController.dshsx)
 router.get('/hangsx/:slug/chitiet',checkUser, hangsxController.chitiet)
 //Khách hàng controller
-router.post('/:id/themVaoGioHang',checkUser, khachHangController.themvaogiohang)
+router.post('/:id/themVaoGioHang',requireAuth,checkUser, khachHangController.themvaogiohang)
 router.post('/:id/xoaKhoiGioHang',checkUser, khachHangController.xoaKhoiGioHang)
 router.get('/xemGioHang',checkUser, khachHangController.xemGioHang)
 router.post('/xemGioHang',checkUser, khachHangController.xemGioHangPost)

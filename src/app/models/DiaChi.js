@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-
+const mongooseDelete = require('mongoose-delete')
 const DiaChi = new Schema({
     maKhachHang: {
         type: Schema.Types.ObjectId,
@@ -23,5 +23,8 @@ const DiaChi = new Schema({
         require: true
     },
 })
-
+DiaChi.plugin(mongooseDelete,{ 
+    deleted_At: true,
+    overrideMethods: 'all' ,
+})
 module.exports = mongoose.model('DiaChi',DiaChi)

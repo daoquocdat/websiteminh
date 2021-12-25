@@ -676,3 +676,53 @@ html, body {
   }
 } 
 
+#lichSuMuaHang{
+  .table{
+    .tieuDe{
+      display: flex;
+      border: 1px solid #333;
+      
+      .chuDam{
+        font-weight: 700;
+      }
+      .w-20{
+        width: 20%;
+        text-align: center;
+      }
+      .gachPhanCach{
+        border-right: 1px solid #333;
+      }
+    }
+    .noiDung{
+      width: 100%;
+      height: 140px;
+      border: 1px solid #333;
+      padding: 8px;
+      margin-bottom: 4px;
+      border-radius: 5px;
+      .el{
+        display: flex;
+        .w-20{
+          width: 20%;
+        }
+        .chuDam{
+          font-weight: 700;
+        }
+        .canhGiua{
+          text-align: center;
+        }
+      }
+      .binhLuan{
+        display: none;
+        .w-20{
+          width: 20%;
+          .guiDanhGia, .dongDanhGia{
+            margin-left: 16px;
+            margin-top: 16px;
+          }
+          
+        }
+      }
+    }
+  }
+}

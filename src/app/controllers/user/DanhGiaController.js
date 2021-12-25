@@ -1,32 +1,32 @@
 const DanhGia = require('../../../../src/app/models/DanhGia')
 const DonHang = require('../../../../src/app/models/DonHang')
-
+const mongoose = require('mongoose')
 const {mutipleMongooseToObject} = require('../../../../src/util/mongoose')
 class DanhGiaController {
-   danhGia(req, res, next){
-       console.log(req.user._id)
-       const danhgia = new DanhGia({
-            maKhachHang: req.user._id,
-            noiDung: req.body.danhGia,
-            maDonHang: req.body.idDonHang,
-       }).save()
-       .then((danhgia)=> {
-            console.log(danhgia)
+    danhGia(req, res, next){
+        console.log(req.body)
+        const idDonHang = mongoose.Types.ObjectId(req.body.id);
+        console.log(idDonHang)
+        const danhGia = new DanhGia({
+            noiDung: req.body.text,
+            maDonHang: idDonHang,
+            maKhachHang: req.user._id
+        }).save()
+        .then((danhGia) =>{
+            
             DonHang.updateOne({
-                _id: danhgia.maDonHang
+                _id: idDonHang
             },{
-                maDanhGia: danhgia._id
+                maDanhGia: danhGia._id
             })
             .then(() => {
-                console.log('gửi đánh giá thành công')
+                console.log('thành công')
+                res.redirect('/lichSuMuaHang')
             })
             .catch((err) => {
-                console.log('lỗi khi gửi đánh giá', err)
+                console.log('thất bại, ',err)
             })
-       })
-       .catch((err) => {
-           console.log(err)
-       })
+        })
    }
 }
 

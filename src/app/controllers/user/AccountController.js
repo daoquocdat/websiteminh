@@ -48,7 +48,7 @@ class AccountController {
         })
     }
     xoaDiaChi(req, res, next){
-        DiaChi.deleteOne({_id: req.params.id})
+        DiaChi.delete({_id: req.params.id})
         .then(() =>{
             console.log('xóa địa chỉ thành công')
             res.json({message: 'xoa dia chi thanh cong'})
@@ -58,7 +58,7 @@ class AccountController {
         })
     }
     lichSuMuaHang(req, res, next){
-        DonHang.find({maKhachHang: req.user._id}).populate('maChiTietDonHang')
+        DonHang.find({maKhachHang: req.user._id}).populate(['maChiTietDonHang', 'maDanhGia'])
         .then((dsdh) => {
             res.render('user/account/lichSuMuaHang',{
                 dsdh: mutipleMongooseToObject(dsdh)
@@ -73,6 +73,19 @@ class AccountController {
         if(req.file){
             KhachHang.updateOne({_id: req.user._id},{
                 hinhAnh: req.file.filename,
+                hoTen: req.body.name,
+                gioTinh: req.body.gender,
+            })
+            .then(() => {
+                console.log('update khach hang thanh cong')
+                res.json({message: 'update thong tin khach hang thanh cong'})
+            })
+            .catch((err) => {
+                console.log('loi update thong tin khach hang', err)
+            })
+        }
+        else{
+            KhachHang.updateOne({_id: req.user._id},{
                 hoTen: req.body.name,
                 gioTinh: req.body.gender,
             })

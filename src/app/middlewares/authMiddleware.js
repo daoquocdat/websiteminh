@@ -4,10 +4,11 @@ const NhanVien = require('../../../src/app/models/NhanVien')
 
 const requireAuth = (req, res, next) =>{
     const token = req.cookies.jwt
+    console.log(token)
     if(token){
         jwt.verify(token, 'next user secret', (err, decodedToken)=>{
             if (err){
-                console.log(err,message)
+                console.log(err)
                 res.redirect('/login')
             }else{
                 next()
@@ -19,8 +20,27 @@ const requireAuth = (req, res, next) =>{
     }
 }
 
+const requireAuthAdmin = (req, res, next) =>{
+    const token = req.cookies.jwtAdmin
+    console.log(token)
+    if(token){
+        jwt.verify(token, 'admin', (err, decodedToken)=>{
+            if (err){
+                console.log(err)
+                res.redirect('/admin/login')
+            }else{
+                next()
+            }
+        })
+    }
+    else{
+        res.redirect('/admin/login')
+    }
+}
+
 const checkUser = (req, res, next) =>{
     const token = req.cookies.jwt
+    console.log(token)
     if(token){
         jwt.verify(token, 'next user secret',async (err, decodedToken)=>{
             if(err){
@@ -43,11 +63,29 @@ const checkUser = (req, res, next) =>{
     }   
 }
 
-const checkStaff = (req, res, next) =>{
-    const token = req.cookies.jwt
+const requireAuthStaff = (req, res, next) =>{
+    const token = req.cookies.jwtNV
     console.log(token)
     if(token){
-        jwt.verify(token, 'next user secret',async (err, decodedToken)=>{
+        jwt.verify(token, 'staff secret', (err, decodedToken)=>{
+            if (err){
+                console.log(err)
+                res.redirect('/staff/login')
+            }else{
+                next()
+            }
+        })
+    }
+    else{
+        res.redirect('/staff/login')
+    }
+}
+
+const checkStaff = (req, res, next) =>{
+    const token = req.cookies.jwtNV
+    console.log(token)
+    if(token){
+        jwt.verify(token, 'staff secret',async (err, decodedToken)=>{
             if(err){
                 res.locals.staff = null
                 res.status(500).json('token khong hop le')
@@ -67,35 +105,4 @@ const checkStaff = (req, res, next) =>{
     }   
 }
 
-const staffInfo = async(req, res, next)=>{
-    console.log("req staff info",req.data)
-    // let staff = await NhanVien.findOne({taiKhoanDangNhap: req.body.taikhoan})
-    // req.staff = staff
-    // res.locals.staff = staff
-    // console.log("user middlewares", staff)
-    next()
-}
-
-const checkMember = (req, res, next) =>{
-    console.log('req.data',req.data)
-    if (req.data)
-    {
-        console.log('laf khanh hang')
-    }
-    else{
-        res.locals.user = null
-        next()
-    }
-}
-const checkAdmin = (req, res, next) =>{
-    console.log('req.data',req.data)
-    if (req.data)
-    {
-        
-    }
-    else{
-        res.locals.user = null
-        next()
-    }
-}
-module.exports = { requireAuth, checkUser, checkStaff, staffInfo}
+module.exports = { requireAuth,requireAuthStaff,requireAuthAdmin, checkUser, checkStaff}

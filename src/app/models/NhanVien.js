@@ -43,6 +43,7 @@ const NhanVien = new Schema({
 NhanVien.statics.login = async function(taikhoan, matKhau){
     const nv = await this.findOne({ taikhoan })
     if(nv){
+        console.log(matKhau)
         const auth = await bcrypt.compare(matKhau, nv.matKhau)
         if(auth){
             if(nv.trangThai == 'khóa'){

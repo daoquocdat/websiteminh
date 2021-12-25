@@ -8,7 +8,7 @@ const {mongooseToObject} = require('../../../../src/util/mongoose')
 
 const maxAge = 3*24*60*60
 const createToken = (id) =>{
-    return jwt.sign( { id  }, 'next user secret', { 
+    return jwt.sign( { id  }, 'staff secret', { 
         expiresIn: maxAge 
     })
 }
@@ -29,6 +29,7 @@ class NhanVienController {
         var  cccd = req.body.cccd
         var  diaChi = req.body.diaChi
         try{
+            console.log('mk nv', matKhau)
             const salt = await bcrypt.genSalt()
             matKhau  = await bcrypt.hash(matKhau, salt)
             NhanVien.findOne({taiKhoanDangNhap: req.body.taiKhoan})
@@ -51,7 +52,7 @@ class NhanVienController {
                         const token = createToken(nv._id)
                         console.log(token)
                         console.log('dang ky thanh cong')
-                        res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
+                        //res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
                         res.json({ nv: nv._id, message: 'dang ky thanh cong'})   
                    })
                    .catch((err) => {

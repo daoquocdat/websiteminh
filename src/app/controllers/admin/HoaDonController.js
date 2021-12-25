@@ -5,7 +5,15 @@ const {mutipleMongooseToObject} = require('../../../../src/util/mongoose')
 const {mongooseToObject} = require('../../../../src/util/mongoose')
 class HoaDonController {
    dshd(req, res, next){
-        DonHang.find({trangThai: 'Hoàn tất'}).populate(['maDanhGia','maKhachHang'])
+        DonHang.find({$or: [{
+            trangThai: 'Hủy'
+        },
+        {
+            trangThai: 'Hoàn tất'
+        },
+        
+    ]
+        }).populate(['maDanhGia','maKhachHang'])
         .then((dshd) =>{
             res.render('admin/hoadons/dshd',{
                 dshd: mutipleMongooseToObject(dshd),
@@ -28,7 +36,7 @@ class HoaDonController {
         }])
         
         .then((donhang) => {
-            console.log(donhang)
+            console.log('donhang',donhang)
             res.render('admin/hoadons/chiTietHoaDon', {
                 donhang: mongooseToObject(donhang),
                 layout: 'admin'

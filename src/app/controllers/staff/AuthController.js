@@ -7,7 +7,7 @@ const {mutipleMongooseToObject} = require('../../../../src/util/mongoose')
 
 const maxAge = 3*24*60*60
 const createToken = (id) =>{
-    return jwt.sign( {id}, 'day la nhan vien', { 
+    return jwt.sign( {id}, 'staff secret', { 
         expiresIn: maxAge 
     })
 }
@@ -31,9 +31,8 @@ class AuthController {
                 console.log('Tai khoan da bi khoa')
                 res.json({message: 'Tài khoản đã bị khóa!'})
             }
-            //const token = createToken(nv._id)
-            //console.log(token)
-            //res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
+            const token = createToken(nv._id)
+            res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
             res.json( { nv: nv._id, message: 'Đăng nhập thành công' })
         }
         catch(err){
@@ -44,8 +43,8 @@ class AuthController {
     }
 
     logout_get(req, res, next){
-        //res.cookies('jwtNV', '', { maxAge: 1 })
-        res.redirect('/')
+        res.cookie('jwtNV', '', { maxAge: 1 })
+        res.redirect('/staff/login')
     }
 }
 

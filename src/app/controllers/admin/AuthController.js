@@ -6,7 +6,7 @@ const {mutipleMongooseToObject} = require('../../../../src/util/mongoose')
 
 const maxAge = 3*24*60*60
 const createToken = (id) =>{
-    return jwt.sign( { id  }, 'day la nhan vien', { 
+    return jwt.sign( { id  }, 'admin', { 
         expiresIn: maxAge 
     })
 }
@@ -25,9 +25,11 @@ class AuthController {
         try{
             if(taikhoan == 'admin' && matkhau == 'admin'){
                 console.log('đây là admin')
-                //const token = createToken('123')
-                //res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
+                const token = createToken('admin')
+                console.log(token)
+                res.cookie('jwtAdmin', token, { httpOnly: true, maxAge: maxAge * 1000})
                 res.json( { message: 'đây là admin' })
+
             }
             else{
                 console.log('đăng nhập không hợp lệ')
@@ -43,7 +45,7 @@ class AuthController {
     }
 
     logout_get(req, res, next){
-        //res.cookies('jwt', '', { maxAge: 1 })
+        res.cookie('jwtAdmin', '', { maxAge: 1 })
         res.redirect('/')
     }
 }

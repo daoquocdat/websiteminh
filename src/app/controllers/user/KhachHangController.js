@@ -109,7 +109,6 @@ class KhachHangController {
             })
             .save()
             .then((diachi) =>{
-                console.log('lưu địa chỉ thành công')
                 KhachHang.updateOne({_id: req.user._id},{
                     $push: {
                         diaChi: diachi._id
@@ -139,7 +138,6 @@ class KhachHangController {
     }
 
     phuongThucThanhToanPost(req, res, next){
-        console.log('phương thức thanh toán')
         var pttt = req.body.phuongThuc
         res.json({
             pttt: pttt
@@ -179,8 +177,9 @@ class KhachHangController {
                         ghiChu: sp.ghiChu,
                     })
                 })
-                ctdh.save()    
-            })
+                ctdh.save()  
+                console.log('don hang', donhang)
+            console.log('ct don hang', ctdh)
             DonHang.updateOne({
                 _id: donhang._id
             },{
@@ -194,7 +193,9 @@ class KhachHangController {
                 req.user.save()
             })
             .catch((err) => {console.log(err)})
-            res.json({message: 'hoan tat don hang'})
+            res.json({message: 'hoan tat don hang'})  
+            })
+            
         })
         .catch((err) =>{
             console.log('lỗi tạo đơn hàng', err)

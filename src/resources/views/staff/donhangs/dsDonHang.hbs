@@ -23,8 +23,8 @@
                     <a href="/staff/donhang/{{this._id}}/chiTietDH" class="btn btn-info">Chi tiết đơn hàng</a>
                     <div class="trangThai">
                         <a data-id="{{this._id}}" class="xacNhan btn btn-success">Xác nhận</a>
-                        <a data-id="{{this._id}}" class="huy btn btn-danger">Hủy</a>
                         <a data-id="{{this._id}}" class="hoanTat btn btn-primary">Hoàn tất</a>
+                        <a data-id="{{this._id}}" class="huy btn btn-danger">Hủy</a>
 
                     </div>
                 </td>
@@ -49,7 +49,7 @@
         })
         trangThaiDB.forEach((ttdh, i) => {
             if(ttdh.innerHTML == 'Chưa xác thực'){
-                huy[i].setAttribute('style', 'display: none')
+                //huy[i].setAttribute('style', 'display: none')
                 hoanTat[i].setAttribute('style', 'display: none')
             }
             else if(ttdh.innerHTML == 'Đã xác thực'){
