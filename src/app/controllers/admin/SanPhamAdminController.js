@@ -29,9 +29,9 @@ class SanPhamAdminController {
     }
 
     khoiPhucThungRacSP(req, res, next){
-        HangSanXuat.restore({_id: req.params.id})
+        SanPham.restore({_id: req.params.id})
         .then(() => {
-            res.redirect('/admin/sanphams/dssp')
+            res.redirect('back')
         })
         .catch(next)
     }

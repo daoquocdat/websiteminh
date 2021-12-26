@@ -73,23 +73,25 @@
                     20000
                 </span>
             </div>
-            <div class="tongTien">    
+            <div class="tongTien" style="font-size: 20px;">    
                 <span class="col-lg-6 chu">
                     Tổng tiền: 
                 </span>
                 <span id="tien" hidden>
                     {{kh.gioHang.tongTien}}
                 </span>
-                <span class="col-lg-6 tinh" id="tinh">
+                <span class="col-lg-6 tinh" id="tinh" style="font-weight: 700;">
                     
                 </span>
-            </div>
-            <a href="/phuongThucThanhToan" class="btn btn-secondary">Quay lại</a>
-            <button id="hoanThanh" class="btn btn-success">Hoàn tất</button>
+            </div>  
+        </div>
+        <div class="offset-lg-9 mt-4">
+             <a href="/phuongThucThanhToan" class="btn btn-secondary">Quay lại</a>
+            <button id="hoanThanh" class="btn btn-primary">Hoàn tất</button>
         </div>
     </div>
 </div>
-
+<script src="/js/main.js"></script>
 <script>
     var soNha = document.getElementById('soNha')
     var soNhaClient = localStorage.getItem('soNha')
@@ -118,10 +120,14 @@
         var tinh = document.getElementById('tinh')
         var tien = document.getElementById('tien').innerText
         var tienGiaoHang = document.getElementById('tienGiaoHang').innerText
+        console.log(tienGiaoHang)
         //Tính tổng tiền
         var tongTien = parseInt(tien) + parseInt(tienGiaoHang)
+        var formatTongTien = format_tien(String(tongTien),'VND')
+        console.log(tongTien)
+        console.log(formatTongTien)
         //Hiển thị
-        tinh.innerText = tongTien
+        tinh.innerText = formatTongTien
         //hoàn thành
         hoanThanh.onclick = function(e){
             e.preventDefault()

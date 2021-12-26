@@ -27,9 +27,11 @@ html, body {
     .page-footer{
       margin-top: 24px;
       width: 100%;
+      height: 160px;
       background-color:aquamarine !important;
       position:absolute;
       bottom: 0;
+      top: 100%;
     }
   }
   /* Columns */
@@ -257,6 +259,7 @@ html, body {
   .row{
     width: 100%;
     .items{
+      margin-bottom: 10px;
       .card{
         a{
           color: #333;
@@ -723,6 +726,17 @@ html, body {
           
         }
       }
+    }
+  }
+}
+//header staff
+#staffLayout{
+  .navbar{
+    display: flex;
+    .logout{
+      right: 48px;
+      position: absolute;
+      text-decoration: none;
     }
   }
 }

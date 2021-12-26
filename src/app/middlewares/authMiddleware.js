@@ -40,7 +40,6 @@ const requireAuthAdmin = (req, res, next) =>{
 
 const checkUser = (req, res, next) =>{
     const token = req.cookies.jwt
-    console.log(token)
     if(token){
         jwt.verify(token, 'next user secret',async (err, decodedToken)=>{
             if(err){
@@ -65,7 +64,6 @@ const checkUser = (req, res, next) =>{
 
 const requireAuthStaff = (req, res, next) =>{
     const token = req.cookies.jwtNV
-    console.log(token)
     if(token){
         jwt.verify(token, 'staff secret', (err, decodedToken)=>{
             if (err){
@@ -83,7 +81,6 @@ const requireAuthStaff = (req, res, next) =>{
 
 const checkStaff = (req, res, next) =>{
     const token = req.cookies.jwtNV
-    console.log(token)
     if(token){
         jwt.verify(token, 'staff secret',async (err, decodedToken)=>{
             if(err){

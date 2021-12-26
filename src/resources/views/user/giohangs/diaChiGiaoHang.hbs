@@ -25,26 +25,33 @@
     </div>
     <div class="offset-lg-3 col-lg-6 noiDung">
         <form id="form">
+            
             <div class="form-group">
                 <label for="soNha">Số nhà</label>
+                <div id="loiSoNha" style="color: red;"></div>
                 <input type="text" required class="form-control" id="soNha" placeholder="vd: Số 1 đường Nguyễn Văn A">
             </div>
             <div class="form-group">
                 <label for="phuongXa">Phường/Xã</label>
+                <div id="loiPhuongXa" style="color: red;"></div>
                 <input type="text" required class="form-control" id="phuongXa" placeholder="vd: Phường 4">
             </div>
             <div class="form-group">
                 <label for="quanHuyen">Quận/Huyện</label>
+                <div id="loiQuanHuyen" style="color: red;"></div>
                 <input type="text" required class="form-control" id="quanHuyen" placeholder="vd: Quận 5">
             </div>
             <div class="form-group">
                 <label for="tinhTP">Tỉnh/Thành phố</label>
+                <div id="loiTinhTP" style="color: red;"></div>
                 <input type="text" required class="form-control" id="tinhTP" placeholder="vd: thành phố Hồ Chí Minh">
             </div>
             
         </form>
     </div>
-    <button id="hoanthanh" class="btn btn-primary">Hoàn tất </button>
+    <div class="offset-lg-8">
+        <button id="hoanthanh" class="btn btn-primary">Hoàn tất </button>
+    </div>
         
 </div>
 
@@ -67,6 +74,8 @@
         //lấy ra form
         var form = document.getElementById('form')
         var formDiaChiCu = document.getElementById('form1')
+        //cắm cờ
+        var flag = 1
         if(form){ 
             noiDung.setAttribute('style','display:none;')
             diaChiDaCo.removeAttribute('disabled')
@@ -94,8 +103,15 @@
         //giatri = 0 -> lấy địa chỉ mới
         //giatri = 1 -> lấy địa chỉ cũ
         hoanthanh.onclick = function(e){
-            console.log(giatri)
+            var loiSoNha = document.getElementById('loiSoNha')
+            var loiPhuongXa = document.getElementById('loiPhuongXa')
+            var loiQuanHuyen = document.getElementById('loiQuanHuyen')
+            var loiTinhTP = document.getElementById('loiTinhTP')
             e.preventDefault()
+            loiSoNha.innerHTML = ''
+            loiPhuongXa.innerHTML = ''
+            loiQuanHuyen.innerHTML = ''
+            loiTinhTP.innerHTML = ''
             if(formDiaChiCu){
                 var valueIdOption = diaChiDaCo.options[diaChiDaCo.selectedIndex].value;
             }
@@ -119,24 +135,46 @@
                 })
             }
             else if(giatri == 0){
-                axios.post('/diaChiGiaoHang', {
-                    soNha: soNha.value,
-                    phuongXa: phuongXa.value,
-                    quanHuyen: quanHuyen.value,
-                    tinhTP: tinhTP.value,
-                    giatri: 0,
-                })
-                .then((result) => {
-                    localStorage.setItem ('soNha', result.data.soNha);
-                    localStorage.setItem ('phuongXa', result.data.phuongXa);
-                    localStorage.setItem ('quanHuyen', result.data.quanHuyen);
-                    localStorage.setItem ('tinhTP', result.data.tinhTP);
-                    localStorage.setItem ('idDiaChi', result.data.idDiaChi);
-                    location.assign('/phuongThucThanhToan')
-                })
-                .catch((err) => {
-                    console.log('lỗi', err)
-                })
+                if(soNha.value == ''){
+                    
+                    loiSoNha.innerHTML = 'Vui lòng nhập số nhà!'
+                    flag = 0
+                }
+                if(phuongXa.value == ''){
+                    
+                    loiPhuongXa.innerHTML = 'Vui lòng nhập phường xã!'
+                    flag = 0
+                }
+                if(quanHuyen.value == ''){
+                 
+                    loiQuanHuyen.innerHTML = 'Vui lòng nhập quận huyện!'
+                    flag = 0
+                }
+                if(tinhTP.value == ''){
+                   
+                    loiTinhTP.innerHTML = 'Vui lòng nhập tỉnh tp!'
+                    flag = 0
+                }
+                if(flag == 1){
+                    axios.post('/diaChiGiaoHang', {
+                        soNha: soNha.value,
+                        phuongXa: phuongXa.value,
+                        quanHuyen: quanHuyen.value,
+                        tinhTP: tinhTP.value,
+                        giatri: 0,
+                    })
+                    .then((result) => {
+                        localStorage.setItem ('soNha', result.data.soNha);
+                        localStorage.setItem ('phuongXa', result.data.phuongXa);
+                        localStorage.setItem ('quanHuyen', result.data.quanHuyen);
+                        localStorage.setItem ('tinhTP', result.data.tinhTP);
+                        localStorage.setItem ('idDiaChi', result.data.idDiaChi);
+                        location.assign('/phuongThucThanhToan')
+                    })
+                    .catch((err) => {
+                        console.log('lỗi', err)
+                    })
+                }
             }
         }
 

@@ -14,14 +14,14 @@
             <div class="noiDung">
                 <div class="el">
                     <div class="w-20 chuDam canhGiua">{{sum @index 1}}</div>
-                    <div class="w-20 canhGiua">{{this.tongTien}}</div>
+                    <div class="w-20 canhGiua tongTien">{{this.tongTien}}</div>
                     <div class="trangThai w-20 canhGiua">{{this.trangThai}}</div>
                     <div class="w-20 canhGiua">{{dateFormat this.ngayDat format="MM/DD/YYYY"}}</div>
                     <div class="w-20 canhGiua">
                        <form data-id="{{this._id}}" method="post">
                             <input type="text" name="text" class="text" value="{{this.maDanhGia.noiDung}}">
                             <input type="text" name="id" value="{{this._id}}" hidden class="text">
-                            <button type="button" class="gui" data-id="{{this._id}}">Gửi</button>
+                            <button type="button" class="gui btn btn-secondary" data-id="{{this._id}}">Gửi</button>
                         </form>
                     </div>
                 </div>
@@ -30,20 +30,25 @@
         {{/each}}
     </div>
 </div>
-<script>
-    var vietDanhGia = document.querySelectorAll('.vietDanhGia')    
+<script src="/js/main.js"></script>
+<script>  
     var trangThai = document.querySelectorAll('.trangThai')
-    var dongDanhGia = document.querySelectorAll('.dongDanhGia')
-    var guiDanhGia = document.querySelectorAll('.guiDanhGia')
+    var tongTien = document.querySelectorAll('.tongTien')
     var gui = document.querySelectorAll('.gui')
-    console.log(gui)
-    var flag = 0
-
-    {{!-- trangThai.forEach((tt, i) =>{
-        if(tt.innerHTML != 'Hoàn tất'){
-            vietDanhGia[i].setAttribute('style','display: none;')
+    tongTien.forEach((el) =>{
+        el.innerHTML = format_tien(el.innerHTML,'')
+    })
+    trangThai.forEach((tt) => {
+        if(tt.innerHTML == 'Đã xác thực'){
+            tt.setAttribute('style', 'color: blue')
         }
-    }) --}}
+        else if(tt.innerHTML == 'Hủy'){
+            tt.setAttribute('style', 'color: red')
+        }
+        else if(tt.innerHTML == 'Hoàn tất'){
+            tt.setAttribute('style', 'color: green')
+        }
+    })
     gui.forEach((el) =>{
         el.onclick = function(e){
             e.preventDefault()
@@ -55,27 +60,5 @@
         }
 
     })
-    vietDanhGia.forEach((el) => {
-        el.addEventListener('click', function(e){
-            
-            var hienBinhLuan = el.parentElement.parentElement
-            console.log(hienBinhLuan)
 
-        })
-    })
-
-    dongDanhGia.forEach((el) => {
-        el.addEventListener('click', function(){
-            var dongBinhLuan = el.parentElement.parentElement
-            dongBinhLuan.setAttribute('style', 'display: none')
-            console.log('dong', el.parentElement.parentElement)
-        })
-    })
-
-    guiDanhGia.forEach((el) =>{
-        el.onclick = function(e){
-            e.preventDefault()  
-            console.log(el.parentElement.parentElement.querySelector('.noiDungDanhgia'))
-        }
-    })
 </script>

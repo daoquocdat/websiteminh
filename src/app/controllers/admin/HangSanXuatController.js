@@ -27,6 +27,7 @@ class HangSanXuatController {
     khoiPhucThungRacHSX(req, res, next){
         HangSanXuat.restore({_id: req.params.id})
         .then(() => {
+            console.log('khôi phục thành công')
             res.redirect('back')
         })
         .catch(next)
