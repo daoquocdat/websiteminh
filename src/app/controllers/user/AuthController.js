@@ -6,7 +6,7 @@ const {mutipleMongooseToObject} = require('../../../../src/util/mongoose')
 
 const maxAge = 3*24*60*60
 const createToken = (id) =>{
-    return jwt.sign( { id  }, 'next user secret', { 
+    return jwt.sign({ id }, 'next user secret', { 
         expiresIn: maxAge 
     })
 }
@@ -22,12 +22,18 @@ class AuthController {
         var  password = req.body.password
         try{
             const kh = await KhachHang.login(phone, password)
-            if(kh == 'exist'){
-                console.log('tồn tại kh')
+            if(kh == 'Tài khoản đã bị khóa!'){
+                console.log('Tai khoan da bi khoa')
+                res.json({message: 'Tài khoản đã bị khóa!'})
             }
-            const token = createToken(kh._id)
-            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
-            res.json( { kh: kh._id })
+            else{
+                console.log('tồn tại kh', kh._id)
+                const token = createToken(kh._id)
+                console.log(token)
+                res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
+                res.json({ messageLogin: 'đăng nhập thành công' })
+            }
+            
         }
         catch(err){
             const errors = err
@@ -62,9 +68,10 @@ class AuthController {
                    })
                    .save()
                    .then((kh) => {
-                        console.log(kh._id)
+                        console.log('id khach hang',kh._id)
                     // tạo token
                         const token = createToken(kh._id)
+                        console.log(token)
                         console.log('dang ky thanh cong')
                         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
                         res.json({ kh: kh._id, message: 'dang ky thanh cong'})   

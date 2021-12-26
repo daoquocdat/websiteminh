@@ -64,7 +64,7 @@ KhachHang.statics.login = async function(phone, password){
     if(user){
         const auth = await bcrypt.compare(password, user.matKhau)//123456 => 'dsdsdlsdkjaldkjal'=> 123456
         if(auth){
-            if(user.trangThai == 'khóa'){
+            if(user.trangThai == 'khoa'){
                 console.log('tai khoan bi khoa!')
                 return 'Tài khoản đã bị khóa!'
             }

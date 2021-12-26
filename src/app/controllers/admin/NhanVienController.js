@@ -21,7 +21,6 @@ class NhanVienController {
 
     async dangKyNVPost(req , res , next){
         var  taiKhoan = req.body.taiKhoan
-        console.log(taiKhoan)
         var  matKhau = req.body.matKhau
         var  hoTen = req.body.hoTen
         var  gioiTinh = req.body.gioiTinh
@@ -29,14 +28,13 @@ class NhanVienController {
         var  cccd = req.body.cccd
         var  diaChi = req.body.diaChi
         try{
-            console.log('mk nv', matKhau)
             const salt = await bcrypt.genSalt()
             matKhau  = await bcrypt.hash(matKhau, salt)
-            NhanVien.findOne({taiKhoanDangNhap: req.body.taiKhoan})
+            NhanVien.findOne({taiKhoan: req.body.taiKhoan})
             .then((nhanvien) => {
                 if(nhanvien == null){
                     const nv = new NhanVien({
-                        taiKhoanDangNhap: taiKhoan,
+                        taiKhoan: taiKhoan,
                         matKhau: matKhau,
                         hoTen: hoTen,
                         gioiTinh: gioiTinh,
@@ -47,11 +45,9 @@ class NhanVienController {
                    })
                    .save()
                    .then((nv) => {
-                        console.log(nv._id)
+
                     // tạo token
                         const token = createToken(nv._id)
-                        console.log(token)
-                        console.log('dang ky thanh cong')
                         //res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
                         res.json({ nv: nv._id, message: 'dang ky thanh cong'})   
                    })
@@ -92,8 +88,6 @@ class NhanVienController {
     }
 
     khoaNV(req, res,next){
-        console.log(req.params.id)
-        console.log(req.body)
         if(req.body.trangThai == 'hoat dong'){
             NhanVien.updateOne({_id: req.params.id}, {
                 trangThai: 'khoa', 

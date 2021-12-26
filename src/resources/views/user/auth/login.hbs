@@ -39,7 +39,13 @@
                 if(res.data.error == 'Sai tài khoản hoặc mật khẩu'){
                     fail.innerHTML = 'Sai tài khoản hoặc mật khẩu'
                 }
-                location.assign('/')
+                if(res.data.message == 'Tài khoản đã bị khóa!'){
+                    fail.innerHTML = 'Tài khoản đã bị khóa!'
+                }
+                if(res.data.messageLogin == 'đăng nhập thành công'){
+                    console.log('đang nhap')
+                    location.assign('/')
+                }
             })
             .catch(err => {
                 console.log("err view login",err)

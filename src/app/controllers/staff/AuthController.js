@@ -21,19 +21,22 @@ class AuthController {
     async loginPost(req, res, next){
         var  taikhoan = req.body.taikhoan
         var  matkhau = req.body.matkhau
+        console.log('taikhoan', taikhoan)
+        console.log('matkhau', matkhau)
         try{
             const nv = await NhanVien.login(taikhoan, matkhau)
-            if(nv == 'exist'){
-                console.log('tồn tại nv')
-                
-            }
-            else if(nv == 'Tài khoản đã bị khóa!'){
+            
+            if(nv == 'Tài khoản đã bị khóa!'){
                 console.log('Tai khoan da bi khoa')
                 res.json({message: 'Tài khoản đã bị khóa!'})
             }
-            const token = createToken(nv._id)
-            res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
-            res.json( { nv: nv._id, message: 'Đăng nhập thành công' })
+            else{
+                console.log('tồn tại nv')
+                const token = createToken(nv._id)
+                res.cookie('jwtNV', token, { httpOnly: true, maxAge: maxAge * 1000})
+                res.json( { nv: nv._id, message: 'Đăng nhập thành công' })
+            }
+            
         }
         catch(err){
             const errors = err

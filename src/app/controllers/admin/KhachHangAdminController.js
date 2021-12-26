@@ -14,8 +14,6 @@ class NewsController {
     }
 
     khoaKhachHang(req, res,next){
-        console.log(req.params.id)
-        console.log(req.body)
         if(req.body.trangThai == 'hoat dong'){
             KhachHang.updateOne({_id: req.params.id}, {
                 trangThai: 'khoa', 

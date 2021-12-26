@@ -10,7 +10,7 @@ const hangsxController = require('../../app/controllers/user/HangSanXuatControll
 const danhGiaController = require('../../app/controllers/user/DanhGiaController')
 
 const upload = require('../../../src/app/middlewares/multer')
-const {checkUser} = require('../../../src/app/middlewares/authMiddleware')
+const {checkUser} = require('../../app/middlewares/authMiddleware')
 const {requireAuth} = require('../../../src/app/middlewares/authMiddleware')
 
 //đăng nhập đăng ký

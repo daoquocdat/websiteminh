@@ -40,6 +40,7 @@ const requireAuthAdmin = (req, res, next) =>{
 
 const checkUser = (req, res, next) =>{
     const token = req.cookies.jwt
+    console.log(token)
     if(token){
         jwt.verify(token, 'next user secret',async (err, decodedToken)=>{
             if(err){
@@ -47,7 +48,7 @@ const checkUser = (req, res, next) =>{
                 res.status(500).json('token khong hop le')
                 next()
             }else{
-                //console.log("decode",decodedToken)
+                console.log("decode",decodedToken)
                 let user = await KhachHang.findById(decodedToken.id)
                 req.data = user
                 req.user = user
