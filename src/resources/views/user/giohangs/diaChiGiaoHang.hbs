@@ -45,11 +45,11 @@
                 <label for="tinhTP">Tỉnh/Thành phố</label>
                 <div id="loiTinhTP" style="color: red;"></div>
                 <input type="text" required class="form-control" id="tinhTP" placeholder="vd: thành phố Hồ Chí Minh">
-            </div>
-            
+            </div>  
         </form>
+      
     </div>
-    <div class="offset-lg-8">
+    <div class="offset-lg-8 hoanthanh">
         <button id="hoanthanh" class="btn btn-primary">Hoàn tất </button>
     </div>
         
@@ -71,6 +71,7 @@
         var giatri = 1
         //nút xác nhận địa chỉ
         var hoanthanh = document.getElementById('hoanthanh')
+        var hoanthanhClass = document.querySelector('.hoanthanh')
         //lấy ra form
         var form = document.getElementById('form')
         var formDiaChiCu = document.getElementById('form1')
@@ -89,6 +90,7 @@
                 }
                 else if(el.target.defaultValue == 'dia chi moi'){
                     noiDung.setAttribute('style','display:block;')
+                    hoanthanhClass.setAttribute('style','padding-bottom: 200px; ')
                     diaChiDaCo.setAttribute('disabled', true)
                     giatri = 0
                 }

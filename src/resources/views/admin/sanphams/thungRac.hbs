@@ -1,8 +1,12 @@
-<div class="col-xl-10">
+<div class="formatDataTable">
+    
         <div>
-            <a href="/admin/sanpham/dssp" class="">Danh sách hãng sản xuất</a>
+            <a href="/admin/sanpham/dssp" class="btn btn-outline-info">Quay lại danh sách sản phẩm</a>
         </div>
-        <table class="table table-striped" id="table">
+        <div class="tittleDataTable">
+            Thùng rác sản phẩm
+        </div>
+        <table class="table table-striped table-bordered" id="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -10,22 +14,21 @@
                     <th>Tên sản phẩm</th>
                     <th>Giá</th>
                     <th>Số lượng còn lại</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {{#each dssp}}
                     <tr>
-                        <th>{{sum @index 1}}</th>
-                        <th style="height: 50px;"><img src="/img/{{this.hinhAnh}}" alt="" style="height: 100%;"></th>
-                        <th>{{this.tenSanPham}}</th>
-                        <th >{{this.gia}}</th>
-                        <th>{{this.soLuong}}</th>
-                        <th>  
+                        <td>{{sum @index 1}}</td>
+                        <td style="height: 50px;"><img src="/img/{{this.hinhAnh}}" alt="" style="height: 100%;"></td>
+                        <td>{{this.tenSanPham}}</td>
+                        <td class="gia">{{this.gia}}</td>
+                        <td>{{this.soLuong}}</td>
+                        <td>  
                             <a href="" class="btnXoaSP btn btn-danger" data-id="{{this._id}}">Xóa</a>
-                        </th>
-                        <th scope="col">
                             <a href="" class="btnKhoiPhucSP btn btn-primary" data-id="{{this._id}}">Khôi phục</a>
-                        </th>
+                        </td>
                     </tr>
                 {{else}}
                     Thùng rác trống!
@@ -35,15 +38,22 @@
     <form name="formKhoiPhuc" method="POST"></form>
     <form name="formXoa" method="POST"></form>
 </div>
-
+<script src="/js/main.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         var form = document.forms['formKhoiPhuc']
         var formXoa = document.forms['formXoa']
         var btnKhoiPhucSP = document.querySelectorAll('.btnKhoiPhucSP')
         var btnXoaSP = document.querySelectorAll('.btnXoaSP')
-        console.log(form)
-        
+        //active
+        var items = document.querySelectorAll('.items')
+        items[0].classList.add('active')
+        //gia
+        var gia = document.querySelectorAll('.gia')
+        gia.forEach((g) =>{
+            console.log(g.innerHTML)
+            g.innerHTML = format_tien(g.innerHTML, '')
+        })
         btnKhoiPhucSP.forEach((btn) => {
             btn.addEventListener("click", function(e) {
                 e.preventDefault()

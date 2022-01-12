@@ -37,7 +37,7 @@ class HangSanXuatController {
         HangSanXuat.deleteOne({_id: req.params.id})
         .then(() => {
             console.log('xóa hsx thành công')
-            res.redirect('/back')
+            res.redirect('back')
             res.json({ message: 'xoa hsx thanh cong'  })
         })
         .catch(() => {

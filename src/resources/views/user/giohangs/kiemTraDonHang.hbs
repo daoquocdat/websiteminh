@@ -10,7 +10,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Tên sản phẩm</th>
                 <th scope="col">Số lượng</th>
-                <th scope="col">Giá/1 sản phẩm</th>
+                <th scope="col">Giá sản phẩm</th>
                 <th scope="col">Màu</th>
                 <th scope="col">Ghi chú</th>
             </tr>
@@ -21,7 +21,7 @@
                     <td>{{sum @index 1}}</td>
                     <td>{{this.idSanPham.tenSanPham}}</td>
                     <td>{{this.soLuong}}</td>
-                    <td>{{this.idSanPham.gia}}</td>
+                    <td class="gia">{{this.idSanPham.gia}}</td>
                     <td>{{this.mau}}</td>
                     <td>{{this.ghiChu}}</td>
                 </tr>
@@ -55,16 +55,14 @@
         <div class="tinhTien offset-lg-4 col-lg-4">
             <div class="tieuDe">Thanh toán: </div>
             <div id="thanhToan"></div>
-            {{#each kh.gioHang.sp}}
-                <div class="tungSP">
-                    <span class="col-lg-6">
-                        {{this.idSanPham.tenSanPham}}:
-                    </span>
-                    <span class="col-lg-6">
-                        {{this.idSanPham.gia}} * {{this.soLuong}}
-                    </span>
-                </div>
-            {{/each}}
+            <div class="tongTienHang">
+                <span class="col-lg-6">
+                    Tổng tiền hàng
+                </span>
+                <span class="col-lg-6" id="tongTienHang">
+                    {{kh.gioHang.tongTien}}
+                </span>
+            </div>
             <div class="phiGiaoHang">
                 <span class="col-lg-6">
                     Phí giao hàng
@@ -118,16 +116,23 @@
         //lấy nút hoàn tất
         var hoanThanh = document.getElementById('hoanThanh')
         var tinh = document.getElementById('tinh')
-        var tien = document.getElementById('tien').innerText
-        var tienGiaoHang = document.getElementById('tienGiaoHang').innerText
-        console.log(tienGiaoHang)
+        var tien = document.getElementById('tien')
+        var tienGiaoHang = document.getElementById('tienGiaoHang')
+        var tongTienHang = document.getElementById('tongTienHang')
+        var gia = document.querySelectorAll('.gia')
+
+
         //Tính tổng tiền
-        var tongTien = parseInt(tien) + parseInt(tienGiaoHang)
+        var tongTien = parseInt(tien.innerText) + parseInt(tienGiaoHang.innerText)
         var formatTongTien = format_tien(String(tongTien),'VND')
-        console.log(tongTien)
-        console.log(formatTongTien)
         //Hiển thị
         tinh.innerText = formatTongTien
+        tongTienHang.innerText = format_tien(String(tongTienHang.innerText),'')
+        tienGiaoHang.innerText = format_tien(String(tienGiaoHang.innerText),'')
+
+        gia.forEach((g) => {
+            g.innerHTML = format_tien(g.innerHTML, '')
+        })
         //hoàn thành
         hoanThanh.onclick = function(e){
             e.preventDefault()

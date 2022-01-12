@@ -8,6 +8,7 @@ const authController = require('../../app/controllers/user/AuthController')
 const accountController = require('../../app/controllers/user/AccountController')
 const hangsxController = require('../../app/controllers/user/HangSanXuatController')
 const danhGiaController = require('../../app/controllers/user/DanhGiaController')
+const homeController = require('../../app/controllers/user/HomeController')
 
 const upload = require('../../../src/app/middlewares/multer')
 const {checkUser} = require('../../app/middlewares/authMiddleware')
@@ -51,6 +52,6 @@ router.post('/phuongThucThanhToan',checkUser, khachHangController.phuongThucThan
 router.get('/kiemTraDonHang',checkUser, khachHangController.kiemTraDonHang)
 router.post('/donhang/xacThuc',checkUser, khachHangController.xacThucDonHang)
 router.get('/hoanTatDonHang',checkUser, khachHangController.hoanTatDonHang)
-router.get('/',checkUser, sanPhamController.dssp)
+router.get('/',checkUser, homeController.index)
 
 module.exports = router

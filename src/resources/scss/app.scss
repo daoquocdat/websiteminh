@@ -26,12 +26,13 @@ html, body {
     }
     .page-footer{
       margin-top: 24px;
+      border:rgba(53, 142, 215, 0.5);
       width: 100%;
-      height: 160px;
-      background-color:aquamarine !important;
+      height: 180px;
+      background-color:rgba(172, 171, 171, 0.561) !important;
+      color: #323232;
       position:absolute;
       bottom: 0;
-      top: 100%;
     }
   }
   /* Columns */
@@ -237,27 +238,114 @@ html, body {
   height: 100%;
 }
 .sidebar{
-  background-color: #212529;
+  background-color: #E1E8EE;
   height: 100%;
   ul{
     height: 100%;
     list-style: none;
+    .active{
+      color: red;
+      li{      
+        .content{
+          border-bottom: 1px solid red;
+        }
+        span{
+          i, svg{
+            color: #323232;
+            background: #fff;
+          }
+        }
+      }
+    }
     a{
       font-size: 16px;
+      font-weight: 500;
       margin-top: 20px;
-      color: #E1E8EE;
+      color: #323232;
       text-decoration: none;
+      small, svg{
+        width: 16px;
+          height: 16px;
+          font-size: 16px;
+        svg{  
+          background: #fff;
+        }
+      }
+      span{
+        i, svg{
+          background: #fff;
+        }
+      }
+    }
+    a:hover{
+      color: red;
+      span{
+        i, svg{
+          color: #323232;
+          background: #fff;
+        }
+      }
     }
   }
 }
+//Giao diện admin
+.rowAdmin{
+  display: flex;
+}
 
+//border ngoài form thêm và sửa
+.borderForm{
+  border: 1px solid #dddbdb;
+  border-radius: 10px;
+}
+//format datatable
+.formatDataTable{
+  margin-top: 16px;
+  margin-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  .tittleDataTable{
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .top{
+    display: flex;
+    position: relative;
+    margin-bottom: 16px;
+    .trash{
+      position: absolute;
+      right: 60px;
+    }
+  }
+}
+//dssp admin
+.dsspAdmin{
+
+  #table{
+    .btn-danger:hover{
+      background: #fff !important;
+      color: red;
+    }
+    .btn-primary:hover{
+      background: #fff !important;
+      color: #0d6efd;
+    }
+  }
+}
 
 //DSSP
 .dssp{
   width: 100%;
   height: 100%;
-  .row{
+  margin-bottom: 160px;
+  .title{
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .listItems{
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
     .items{
       margin-bottom: 10px;
       .card{
@@ -266,7 +354,8 @@ html, body {
         }
         a:hover{
           text-decoration: none;
-          color: rgba(0,0,0,0.1);
+          color: #0d6efd;
+          background-color: #fff;
         }
         .items-img{
           border: 1px solid #333;
@@ -277,6 +366,9 @@ html, body {
             margin-bottom: 2px;
             .btn{
               color: #ffffff;
+            }
+            a:hover{
+              color: #0d6efd;
             }
           }
         }
@@ -481,6 +573,7 @@ html, body {
 
 //Kiểm tra thông tin đơn hàng
 #kiemTraTTDH{
+  padding-bottom: 30px;
   .tieuDe{
     font-size: 24px;
     font-weight: bold;
@@ -511,7 +604,7 @@ html, body {
           text-align: center;
         }
       }
-      .phiGiaoHang{
+      .phiGiaoHang, .tongTienHang{
         width: 100%;
         display: flex;
         margin-bottom: 2px;
@@ -589,6 +682,9 @@ html, body {
         width: 100%;
         display: flex;
       }
+      .dam{
+        font-weight: 700;
+      }
     }
   }
 }
@@ -597,7 +693,8 @@ html, body {
 .headerUser{
   padding-right: 20px;
   display: flex;
-
+  margin-left: 20px;
+  margin-right: 20px;
   #search{
     padding: 16px;
     .thanhSearch{
@@ -678,8 +775,11 @@ html, body {
     }
   }
 } 
-
+.diaChiKH{
+  margin-bottom: 160px;
+}
 #lichSuMuaHang{
+  margin-bottom: 160px;
   .table{
     .tieuDe{
       display: flex;
@@ -740,19 +840,65 @@ html, body {
     }
   }
 }
-
-.messages{
-  .account{
-    #form{
-      .avatar{
-        width: 300px;
-        height: 320px;
-        margin-bottom: 50px;
-        img{
-          width: 100%;
-          height: 100%;
+.infoAccount{
+  margin-bottom: 160px;
+  width: 100%;
+  height: 100%;
+  .messages{
+    .account{
+      #form{
+        .avatar{
+          width: 300px;
+          height: 320px;
+          margin-bottom: 50px;
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
   }
+}
+
+//slide
+#carouselExampleControls{
+  margin-top: -15px;
+  .carousel-inner{
+    .carousel-item{
+      img{
+        width: 100%;
+        height: 500px;
+      }
+    }
+  }
+}
+
+.logoHeader{
+  width: 120px;
+  height: 100%;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.layoutLogin{
+  width: 100%;
+  height: 100%;
+  background: #89898a;
+  .abc{
+    height: 100%;position: relative;
+    .login{
+      margin-left: 20%;
+      margin-right: 20%;
+      width: 60%;
+      position: absolute;
+      top: 30%;
+    }
+  }
+}
+
+.register{
+  padding-bottom: 180px;
 }

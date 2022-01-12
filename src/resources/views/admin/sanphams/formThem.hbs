@@ -1,4 +1,5 @@
-<div class="col-xl-9">
+<div class="formatDataTable offset-lg-3 col-lg-6 borderForm">
+    <div class="tittleDataTable">Form thêm sản phẩm</div>
     <form id="form" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="tenSanPham">Tên sản phẩm</label>
@@ -17,6 +18,7 @@
             <input type="text" class="form-control" id="kichThuoc">
         </div>
         <div class="form-group">
+            Hãng sản xuất
             <select id="hangsx">
                 {{#each dshsx}}
                     <option value="{{this._id}}">{{this.tenHangSanXuat}}</option>
@@ -31,12 +33,15 @@
             <label for="hinhAnh">Hình ảnh</label>
             <input type="file" class="form-control" name="hinhAnh" id="hinhAnh">
         </div>
-        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+        <button type="submit" class="btn btn-primary mt-4 mb-4">Thêm sản phẩm</button>
     </form>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         var form = document.getElementById('form')
+        //active
+        var items = document.querySelectorAll('.items')
+        items[0].classList.add('active')
         form.addEventListener('submit', function(e){
             e.preventDefault()
             var tenSanPham = document.getElementById('tenSanPham').value

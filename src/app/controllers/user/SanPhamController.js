@@ -24,7 +24,6 @@ class SanPhamController {
             })
             .catch(next)
     }
-
 }
 
 module.exports= new SanPhamController

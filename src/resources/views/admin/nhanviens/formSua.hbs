@@ -25,6 +25,10 @@
 
 <script>
     var form = document.getElementById('form')
+    //active
+        var items = document.querySelectorAll('.items')
+        items[3].classList.add('active')
+    //end active
     form.addEventListener('submit', function(e){
         e.preventDefault()
         var hoTen = document.getElementById('hoTen').value

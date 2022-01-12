@@ -1,5 +1,5 @@
-<div class="offset-lg-3 col-lg-6 dangKyNV">
-    <div class="tieuDe">Tạo tài khoản nhân viên</div>
+<div class="offset-lg-3 col-lg-6 dangKyNV formatDataTable borderForm">
+    <div class="tittleDataTable">Tạo tài khoản nhân viên</div>
     <form id="form" method="POST">
         <div id="loi" style="red"></div>
         <div class="form-group">
@@ -33,13 +33,17 @@
             <label for="diaChi">Địa chỉ</label>
             <input type="text" required class="form-control" id="diaChi">
         </div>
-        <button type="submit" class="btn btn-primary">Tạo nhân viên</button>
+        <button type="submit" class="btn btn-primary mt-4 mb-4">Tạo nhân viên</button>
     </form>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         var form = document.getElementById('form')
+        //active
+        var items = document.querySelectorAll('.items')
+        items[3].classList.add('active')
+        //end active
         form.addEventListener('submit', function(e){
             e.preventDefault()
             var taiKhoan = document.getElementById('taiKhoan').value

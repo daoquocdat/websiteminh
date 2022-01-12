@@ -1,7 +1,7 @@
-<div>
+<div class="formatDataTable diaChiKH">
     <a href="/themDiaChi" class="btn btn-info">Thêm địa chỉ mới</a>
-    <div style="font-size: 24px;font-weight: 700;">Địa chỉ khách hàng</div>
-    <table class="table">
+    <div class="tittleDataTable">Địa chỉ khách hàng</div>
+    <table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>STT</th>
@@ -16,13 +16,13 @@
             <tr>
 
                 <th>{{sum @index 1}}</th>
-                <th>{{this.soNha}}</th>
-                <th>{{this.phuongXa}}</th>
-                <th>{{this.quanHuyen}}</th>
-                <th>{{this.tinhTP}}</th>
-                <th>
+                <td>{{this.soNha}}</td>
+                <td>{{this.phuongXa}}</td>
+                <td>{{this.quanHuyen}}</td>
+                <td>{{this.tinhTP}}</td>
+                <td>
                     <a href="" class="btnXoaDiaChi btn btn-danger" data-id="{{this._id}}">Xóa địa chỉ</a>
-                </th>
+                </td>
             </tr>
             {{/each}}
         </tbody>

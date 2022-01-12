@@ -40,7 +40,7 @@ class SanPhamAdminController {
         SanPham.deleteOne({_id: req.params.id})
         .then(() => {
             console.log('xóa sp thành công')
-            res.redirect('/admin/sanphams/dssp')
+            res.redirect('/admin/sanpham/trashSP')
             res.json({ message: 'xoa sp thanh cong'  })
         })
         .catch(() => {

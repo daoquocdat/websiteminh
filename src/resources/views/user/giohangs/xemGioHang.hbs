@@ -8,7 +8,7 @@
                 <th scope="col">#</th>
                 <th scope="col" colspan="2">Tên sản phẩm</th>
                 <th scope="col">Số Lượng</th>
-                <th scope="col">Giá /1 sản phẩm</th>
+                <th scope="col">Giá sản phẩm</th>
                 <th scope="col">Màu</th>
                 <th scope="col">Ghi chú khác</th>
             </tr>
@@ -38,23 +38,35 @@
         </tbody>
     </table>
     
-    <div>
-        Tổng tiền:
-        <span id="totalPrice">
-            {{gioHang.tongTien}}
-        </span>        
+    <div class="offset-lg-9">
+        <div>
+            Tổng tiền:
+            <span id="totalPrice" class="totalPrice">{{gioHang.tongTien}}</span>        
+        </div>
+        <div>
+            <button id="btnConfirm" class="btn btn-success">
+                Xác nhận mua hàng
+            </button>
+        </div>
     </div>
-    <button id="btnConfirm" class="btn btn-success">
-        Xác nhận mua hàng
-    </button>
+    
 </div>
+<script src="/js/main.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function(){
         var btnRemove = document.querySelectorAll('.btnRemove')
         var btnConfirm = document.getElementById('btnConfirm')
         var fail = document.getElementById('fail')
-        console.log(btnConfirm)
+        var price = document.querySelectorAll('.price')
+        var totalPrice = document.querySelector('.totalPrice')
+        console.log(totalPrice.innerHTML)
 
+        price.forEach((g) =>{
+            g.innerHTML = format_tien(g.innerHTML, '')
+        })
+        totalPrice.innerHTML = format_tien(totalPrice.innerHTML, 'VND')
+
+        
         //Xóa sp khỏi giỏ hàng
         btnRemove.forEach((btn) =>{
             btn.onclick = function(){
@@ -66,10 +78,10 @@
 
         //Xác nhận mua hàng
         btnConfirm.onclick = function(){
-            console.log('abc')
+            console.log(this.parentElement.parentElement.parentElement.querySelector('.table').querySelectorAll('.rowData'))
             var flag = 1
             var arrayData = []
-            var rowData = this.parentElement.querySelector('.table').querySelectorAll('.rowData')
+            var rowData = this.parentElement.parentElement.parentElement.querySelector('.table').querySelectorAll('.rowData')
             rowData.forEach((row, i) => {
                 var idSP = row.querySelector('.idSP').innerText
                 var amount = row.querySelector('.amount').innerText
@@ -80,7 +92,7 @@
                 //cắm cờ
                 
                 if(note == ''){
-                    fail.innerHTML = 'Vui long nhap ghi chu!'
+                    fail.innerHTML = 'Vui lòng nhập ghi chú!'
                     flag = 0
                 }
                 if(parseInt(amountData) < 1){    

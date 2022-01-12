@@ -1,28 +1,29 @@
-<div class="col-xl-10">
-    <table class="table table-striped" id="table">
+<div class="formatDataTable">
+    <div class="tittleDataTable">Danh sách khách hàng</div>
+    <table class="table table-striped table-bordered" id="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tên</th>
                 <th>Số điện thoại</th>
                 <th>Email</th>
-                <th></th>
+                <th>Trạng thái</th>
             </tr>
         </thead>
         <tbody>
             {{#each dskh}}
                 <tr>
                     <th>{{sum @index 1}}</th>
-                    <th>{{this.hoTen}}</th>
-                    <th >{{this.phone}}</th>
-                    <th>{{this.email}}</th>
+                    <td>{{this.hoTen}}</td>
+                    <td >{{this.phone}}</td>
+                    <td>{{this.email}}</td>
                     <td class="status" hidden>{{this.trangThai}}</td>
-                    <th>
+                    <td>
                         <span class="" data-id="{{this._id}}">
                             {{#block_unblock_account this.trangThai}}
                             {{/block_unblock_account}}
                         </span>
-                    </th>  
+                    </td>  
                 </tr>
             {{/each}}
         </tbody>
@@ -33,6 +34,10 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(){
     var blockAccount = document.querySelectorAll('.btn-block-account') 
+    //active
+        var items = document.querySelectorAll('.items')
+        items[4].classList.add('active')
+    //end active
         blockAccount.forEach((btn, i) =>{          
             btn.onclick = function(){
                 console.log(btn)

@@ -1,11 +1,11 @@
-<div class="dshd">
-    <table class="table table-striped" id="table">
+<div class="dshd formatDataTable">
+    <table class="table table-striped table-bordered" id="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Mã đơn hàng</th>
                 <th>Số tiền</th>
-                <th>Số điện thoại khách hàng</th>
+                <th>Số điện thoại</th>
                 <th>Trạng thái</th>
                 <th>Lý do</th>
                 <th>Đánh giá</th>
@@ -34,6 +34,10 @@
 <script>
     var tongTien = document.querySelectorAll('.tongTien')
     var trangThai = document.querySelectorAll('.trangThai')
+    //active
+        var items = document.querySelectorAll('.items')
+        items[2].classList.add('active')
+    //end active
     tongTien.forEach((tien) => {
         tien.innerHTML = format_tien(tien.innerHTML, '')
     })

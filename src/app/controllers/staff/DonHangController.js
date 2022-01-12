@@ -63,7 +63,6 @@ class DonHangController {
             }
            }])
         .then((donhang) => {
-            console.log(donhang)
             res.render('staff/donhangs/chiTietDonHang', {
                 donhang: mongooseToObject(donhang),
                 layout: 'staff'

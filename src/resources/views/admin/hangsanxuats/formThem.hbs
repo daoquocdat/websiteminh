@@ -1,6 +1,6 @@
-<div class="col-xl-10">
+<div class="formatDataTable offset-lg-3 col-lg-6 borderForm">
     <form id="form" method="POST" enctype="multipart/form-data">
-        <h3>Form thêm hãng sản xuất</h3>
+        <div class="tittleDataTable">Form thêm hãng sản xuất</div>
         <div class="form-group">
             <label for="tenHangSanXuat">Tên hãng sản xuất</label>
             <input type="text" class="form-control" id="tenHangSanXuat" >
@@ -9,14 +9,17 @@
             <label for="hinhAnh">Hình ảnh</label>
             <input type="file" class="form-control" name="hinhAnh" id="hinhAnh">
         </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Thêm</button>
+        <button type="submit" class="btn btn-primary mt-4 mb-4">Thêm</button>
     </form>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         var form = document.getElementById('form')
+        //active
+        var items = document.querySelectorAll('.items')
+        items[1].classList.add('active')
+        //end active
         form.addEventListener('submit', function(e){
             e.preventDefault()
             var tenHangSanXuat = document.getElementById('tenHangSanXuat').value

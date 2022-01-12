@@ -4,7 +4,7 @@ const mongooseDelete = require('mongoose-delete')
 const Schema = mongoose.Schema;
 
 const SanPham = new Schema({
-    tenSanPham: { type: String, minLength: 5},
+    tenSanPham: { type: String},
     soLuong: {type: Number},
     hinhAnh: {type:String},
     moTa: { type: String},
