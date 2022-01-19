@@ -7,6 +7,7 @@ const hangSanXuatController = require('../../app/controllers/admin/HangSanXuatCo
 const authController = require('../../app/controllers/admin/AuthController')
 const nhanVienController = require('../../app/controllers/admin/NhanVienController')
 const hoaDonController = require('../../app/controllers/admin/HoaDonController')
+const donHangController = require('../../app/controllers/admin/DonHangController')
 const {requireAuthAdmin} = require('../../../src/app/middlewares/authMiddleware')
 //Đăng nhập đăng xuất
 router.get('/login', authController.loginGet)
@@ -47,6 +48,12 @@ router.post('/nhanvien/:id/khoaNV',requireAuthAdmin, nhanVienController.khoaNV)
 //hóa đơn
 router.get('/hoadon/dshd',requireAuthAdmin, hoaDonController.dshd)
 router.get('/hoadon/:id/chiTietHoaDon',requireAuthAdmin, hoaDonController.chiTietHoaDon)
+//Đơn hàng
+router.get('/donhang/:id/chiTietDH',requireAuthAdmin, donHangController.chiTietDH)
+router.get('/donhang/dsdh',requireAuthAdmin, donHangController.dsdh)
+router.post('/donhang/:id/xacNhan',requireAuthAdmin, donHangController.xacNhanDH)
+router.post('/donhang/:id/huy',requireAuthAdmin, donHangController.huyDH)
+router.post('/donhang/:id/hoanTat',requireAuthAdmin, donHangController.hoanTatDH)
 //index
 router.get('/',requireAuthAdmin, sanPhamController.index)
 module.exports = router
